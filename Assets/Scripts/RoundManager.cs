@@ -1,14 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class RoundManager : MonoBehaviour
+public class RoundManager : NetworkBehaviour
 {
     public GameRulesData gameRules;
+    public GameObject pickup;
+    private List<Transform> pickupSpawnPoints = new List<Transform>(); 
+    int pickupSpawnInterval;
 
+    [Server]
     void Start()
     {
+        foreach(Transform child in this.transform)
+        {
+            pickupSpawnPoints.Add(child);
+        }
+
         StartCoroutine(RoundTimer());
+
+        pickupSpawnInterval = gameRules.timePerRound / (gameRules.howCommonArePowerups+1);
+
         StartCoroutine(PickupSpawner());
     }
 
@@ -19,11 +32,9 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator PickupSpawner()
     {
-        yield return new WaitForSeconds(gameRules.timePerRound);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        float waitTime = pickupSpawnInterval + Random.Range(-pickupSpawnInterval / 4f, pickupSpawnInterval / 4f);
+        yield return new WaitForSeconds(waitTime);
+        Instantiate(pickup, pickupSpawnPoints[Random.Range(0, pickupSpawnPoints.Count)]);
+        StartCoroutine(PickupSpawner());
     }
 }

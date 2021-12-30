@@ -42,6 +42,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     #endregion
 
+    
     //bool to store if this client is also the host
     public bool isLeader = false;
     public bool IsLeader
@@ -377,6 +378,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     //    startGameButton.interactable = readyToStart;
     }
+ 
 
     #region Commands
     //commands can be called by clients but are only ran on the server

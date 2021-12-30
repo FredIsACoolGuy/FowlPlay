@@ -15,6 +15,20 @@ public class PlayerSpawnSystem : NetworkBehaviour
     //holds indexx for which spawn point to use next
     private int nextIndex = 0;
 
+    private NetworkManagerOverride room;
+    private NetworkManagerOverride Room
+    {
+        get
+        {
+            //if room is currently null it finds it and assigns to room
+            if (room != null)
+            {
+                return room;
+            }
+            return room = NetworkManager.singleton as NetworkManagerOverride;
+        }
+    }
+
     //adds a spwan point to the list
     public static void AddSpawnPoint(Transform transform)
     {       
@@ -46,7 +60,9 @@ public class PlayerSpawnSystem : NetworkBehaviour
     [Server]
     public void SpawnPlayer(NetworkConnection conn) 
     {
-        Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
+        Debug.Log("BUTTS");
+        // Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
+        Transform spawnPoint = spawnPoints[nextIndex];
 
         //if there isnt a spawnpoint then return an error
         if (spawnPoint == null)
@@ -56,22 +72,52 @@ public class PlayerSpawnSystem : NetworkBehaviour
         }
 
         //connects the playerInstance to the connection
-        GameObject playerInstance = conn.identity.gameObject;
-
+        //GameObject playerInstance = conn.identity.gameObject;
+        //playerInstance.transform.position = spawnPoints[nextIndex].position;
+         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, Quaternion.identity);
         //change player appearance
-        CallLooks(playerInstance, nextIndex);
+        NetworkServer.Spawn(playerInstance, conn);
+       
+
+        CallLooks(playerInstance.GetComponent<NetworkGamePlayer>());
 
         nextIndex++;
     }
 
-    //runs on client
-    [ClientRpc]
-    public void CallLooks(GameObject playerInstance, int posNum)
+    public void CallLooks(NetworkGamePlayer ngp)
     {
         //sets player position
         Debug.Log("Its happening");
-        playerInstance.transform.position = spawnPoints[posNum].position;
+        //playerInstance.transform.position = spawnPoints[posNum].position;
+        //Debug.Log(playerInstance.transform.position);
+        //Room.GamePlayers[nextIndex].transform.position = spawnPoints[posNum].position;
+        //Debug.Break();
         //calls player start to set up looks
-        playerInstance.GetComponent<CharacterLookScript>().playerStart();
+
+        ngp.SetDisplayName(NetworkManagerOverride.playerNames[nextIndex]);
+        ngp.SetSkinNum(NetworkManagerOverride.typeNumbers[nextIndex]);
+        ngp.SetHatNum(NetworkManagerOverride.hatNumbers[nextIndex]);
+        ngp.SetPlayerNum(nextIndex);
+        Room.GamePlayers.Add(ngp);
+        ngp.GetComponent<CharacterLookScript>().playerStart();
     }
+
+    //[ClientRpc]
+    //public void CallLooks(NetworkGamePlayer ngp)
+    //{
+    //    //sets player position
+    //    Debug.Log("Its happening");
+    //    //playerInstance.transform.position = spawnPoints[posNum].position;
+    //    //Debug.Log(playerInstance.transform.position);
+    //    //Room.GamePlayers[nextIndex].transform.position = spawnPoints[posNum].position;
+    //    //Debug.Break();
+    //    //calls player start to set up looks
+
+    //    ngp.SetDisplayName(NetworkManagerOverride.playerNames[nextIndex]);
+    //    ngp.SetSkinNum(NetworkManagerOverride.typeNumbers[nextIndex]);
+    //    ngp.SetHatNum(NetworkManagerOverride.hatNumbers[nextIndex]);
+    //    ngp.SetPlayerNum(nextIndex);
+    //    Room.GamePlayers.Add(ngp);
+    //    ngp.GetComponent<CharacterLookScript>().playerStart();
+    //}
 }
