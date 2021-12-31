@@ -10,14 +10,14 @@ public class PickupScript : NetworkBehaviour
 
     private Vector3 offset;
     
-    [Client]
+    [Server]
     void Update()
     {
         offset = new Vector3(0f,Mathf.Sin(Time.frameCount/bounceTime)*bounceHeight, 0f);
         transform.position = transform.position + offset;
     }
 
-    [Client]
+    [Server]
     private void OnTriggerEnter(Collider other)
     {
         this.gameObject.SetActive(false);

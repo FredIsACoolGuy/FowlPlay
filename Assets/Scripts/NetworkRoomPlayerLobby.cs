@@ -29,6 +29,9 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     public PlayerNameInput nameInput;
     public TMP_Text nameText;
+
+    public GameObject readyImage;
+    public TMP_Text readyText;
     //can only be updated on the server
     //when variables change these functions are called
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
@@ -198,9 +201,15 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
             roomPlayer.charLookScript.changeType(roomPlayer.typeNum);
             roomPlayer.charLookScript.changeHat(roomPlayer.hatNum);
             roomPlayer.nameText.text = roomPlayer.DisplayName;
+            roomPlayer.readyImage.SetActive(roomPlayer.IsReady);
             if (!roomPlayer.IsReady)
             {
+                roomPlayer.readyText.text = "Not Ready";
                 canStartGame = false;
+            }
+            else
+            {
+                roomPlayer.readyText.text = "Ready!";
             }
             p++;
         }
@@ -218,6 +227,13 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     {
         switch (total)
         {
+            case 1:
+                transform.localScale = new Vector3(1f, 1f, 1f);
+                if (num == 0)
+                {
+                    transform.position = new Vector3(0f, 0f, 0f);
+                }
+                break;
             case 2:
                 transform.localScale = new Vector3(1f, 1f, 1f);
                 if (num == 0)

@@ -108,14 +108,7 @@ namespace Multiplayer.GameControls
                 facingDir = aimingVec;
             }
 
-            if(Vector3.Dot(playerMesh.right, facingDir) < -0.5f)
-            {
-                playerMesh.right = Vector3.Lerp(playerMesh.right, facingDir, Time.deltaTime * turnSpeed * 2f);
-            }
-            else
-            {
-                playerMesh.right = Vector3.Lerp(playerMesh.right, facingDir, Time.deltaTime * turnSpeed);
-            }
+            playerMesh.eulerAngles = new Vector3(0f, Mathf.LerpAngle(playerMesh.eulerAngles.y, Vector3.SignedAngle(Vector3.right, facingDir, Vector3.up), Time.deltaTime * turnSpeed), 0f);
         }
 
         private Vector3 attackDir;

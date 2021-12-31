@@ -10,7 +10,7 @@ public class RoundManager : NetworkBehaviour
     private List<Transform> pickupSpawnPoints = new List<Transform>(); 
     int pickupSpawnInterval;
 
-    [Server]
+    [ServerCallback]
     void Start()
     {
         foreach(Transform child in this.transform)
@@ -25,10 +25,13 @@ public class RoundManager : NetworkBehaviour
         StartCoroutine(PickupSpawner());
     }
 
+    [Server]
     private IEnumerator RoundTimer()
     {
         yield return new WaitForSeconds(gameRules.timePerRound);
     }
+
+    [Server]
 
     private IEnumerator PickupSpawner()
     {

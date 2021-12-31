@@ -35,10 +35,10 @@ public class NetworkManagerOverride : NetworkManager
 
 
     //in lobby list
-    public List<NetworkRoomPlayerLobby> RoomPlayers { get; } = new List<NetworkRoomPlayerLobby>();
+    public List<NetworkRoomPlayerLobby> RoomPlayers { get; set; } = new List<NetworkRoomPlayerLobby>();
     
     //in game list
-    public List<NetworkGamePlayer> GamePlayers { get; } = new List<NetworkGamePlayer>();
+    public List<NetworkGamePlayer> GamePlayers { get; set;} = new List<NetworkGamePlayer>();
 
     //load all prefabs that can be spawned into the networked scene
     public override void OnStartServer()
@@ -197,24 +197,17 @@ public class NetworkManagerOverride : NetworkManager
     {
         if(SceneManager.GetActiveScene().path == menuScene && newSceneName.StartsWith("Map"))
         {
-            //for each player
-            // GamePlayers.Clear();
-
-            //for (int i = RoomPlayers.Count - 1; i >= 0; i--)
-            //{
-            //    var conn = RoomPlayers[i].connectionToClient;
-            //    var gameplayerInstance = Instantiate(gamePlayerPrefab);
-            //    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
-            //    gameplayerInstance.SetSkinNum(RoomPlayers[i].typeNum);
-            //    gameplayerInstance.SetHatNum(RoomPlayers[i].hatNum);
-            //    gameplayerInstance.SetPlayerNum(RoomPlayers[i].playerNum);
-
-            //    GamePlayers.Add(gameplayerInstance.GetComponent<NetworkGamePlayer>());
-
-            //    NetworkServer.Destroy(conn.identity.gameObject);
-            //    NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject, true);
-
-            //}
+           for(int i = RoomPlayers.Count -1; i >= 0; i--)
+            {
+                //var conn = RoomPlayers[i].connectionToClient;
+                //var gameplayerInstance = Instantiate(gamePlayerPrefab);
+                //gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+                //gameplayerInstance.SetHatNum(RoomPlayers[i].hatNum);
+                //gameplayerInstance.SetTypeNum(RoomPlayers[i].typeNum);
+                //gameplayerInstance.GetComponent<CharacterLookScript>().playerStart(i);
+                //NetworkServer.Destroy(conn.identity.gameObject);
+                //NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject);
+            }
 
             Debug.Log("Peenus");
             //Debug.Log(GamePlayers[0].gameObject + "  " + GamePlayers[1].gameObject);
@@ -234,19 +227,6 @@ public class NetworkManagerOverride : NetworkManager
             GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
             //spawns it on the network server
             NetworkServer.Spawn(playerSpawnSystemInstance);
-
-            //List<Transform> spawnPoints = new List<Transform>();
-            //foreach(Transform child in GameObject.Find("SpawnPoints").transform)
-            //{
-            //    spawnPoints.Add(child);
-            //}
-
-            //for(int i = 0; i<GamePlayers.Count; i++)
-            //{
-            //    GamePlayers[i].transform.position = spawnPoints[i].position;
-            //    Debug.Log("Pos: " + GamePlayers[i].transform.position);
-            //    Debug.Log("name: " + GamePlayers[i]);
-            //}
         }
 
     }
