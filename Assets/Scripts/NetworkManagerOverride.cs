@@ -27,6 +27,13 @@ public class NetworkManagerOverride : NetworkManager
     public static event Action OnClientDisconnected;
     public static event Action<NetworkConnection> OnServerReadied;
 
+
+    public static List<int> typeNumbers = new List<int>();
+    public static List<int> hatNumbers = new List<int>();
+    public static List<string> playerNames = new List<string>();
+
+
+
     //in lobby list
     public List<NetworkRoomPlayerLobby> RoomPlayers { get; } = new List<NetworkRoomPlayerLobby>();
     
@@ -161,14 +168,26 @@ public class NetworkManagerOverride : NetworkManager
     //Starts the game - switches to the other scene
     public void StartGame()
     {
-        Debug.Log("Simon");
         if(SceneManager.GetActiveScene().path == menuScene)
         {
-            Debug.Log("Garfunkle");
             if (!IsReadyToStart()) { 
                 return; 
             }
-            Debug.Log("WorldTour");
+
+            Debug.Log("LIST LENGTH: " + RoomPlayers.Count);
+            for (int i = 0; i < RoomPlayers.Count; i++)
+            {
+                Debug.Log(RoomPlayers[0].typeNum);
+                NetworkManagerOverride.typeNumbers.Add(RoomPlayers[i].typeNum);
+                NetworkManagerOverride.hatNumbers.Add(RoomPlayers[i].hatNum);
+                NetworkManagerOverride.playerNames.Add(RoomPlayers[i].name);
+            }
+
+            foreach (int num in NetworkManagerOverride.typeNumbers)
+            {
+                Debug.Log("In the list: " + num);
+            }
+
             ServerChangeScene("Map_01");
         }
     }
@@ -179,26 +198,24 @@ public class NetworkManagerOverride : NetworkManager
         if(SceneManager.GetActiveScene().path == menuScene && newSceneName.StartsWith("Map"))
         {
             //for each player
-            GamePlayers.Clear();
+            // GamePlayers.Clear();
 
-            for (int i = RoomPlayers.Count-1; i>=0; i--)
-            {
-                var conn = RoomPlayers[i].connectionToClient;
-                //spawn in game player prefab
-                var gameplayerInstance = Instantiate(gamePlayerPrefab);
-                gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+            //for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            //{
+            //    var conn = RoomPlayers[i].connectionToClient;
+            //    var gameplayerInstance = Instantiate(gamePlayerPrefab);
+            //    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
+            //    gameplayerInstance.SetSkinNum(RoomPlayers[i].typeNum);
+            //    gameplayerInstance.SetHatNum(RoomPlayers[i].hatNum);
+            //    gameplayerInstance.SetPlayerNum(RoomPlayers[i].playerNum);
 
-                ///gameplayerInstance.GetComponent<CharacterLookScript>().changeSkin(RoomPlayers[i].skinNum);
+            //    GamePlayers.Add(gameplayerInstance.GetComponent<NetworkGamePlayer>());
 
-                gameplayerInstance.SetSkinNum(RoomPlayers[i].typeNum);
-                gameplayerInstance.SetHatNum(RoomPlayers[i].hatNum);
-                gameplayerInstance.SetPlayerNum(RoomPlayers[i].playerNum);
-                GamePlayers.Add(gameplayerInstance.GetComponent< NetworkGamePlayer>());
-                //destroy room player
-                NetworkServer.Destroy(conn.identity.gameObject);
-                //replace connection with game player prefab
-                NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject, true);
-            }
+            //    NetworkServer.Destroy(conn.identity.gameObject);
+            //    NetworkServer.ReplacePlayerForConnection(conn, gameplayerInstance.gameObject, true);
+
+            //}
+
             Debug.Log("Peenus");
             //Debug.Log(GamePlayers[0].gameObject + "  " + GamePlayers[1].gameObject);
         }
@@ -206,7 +223,7 @@ public class NetworkManagerOverride : NetworkManager
         base.ServerChangeScene(newSceneName);
     }
 
-    //called when server scene has succesfully changed
+    //called when server scene has succesfully changed 
     public override void OnServerSceneChanged(string sceneName)
     {
         Debug.Log("Peen");
@@ -217,6 +234,19 @@ public class NetworkManagerOverride : NetworkManager
             GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
             //spawns it on the network server
             NetworkServer.Spawn(playerSpawnSystemInstance);
+
+            //List<Transform> spawnPoints = new List<Transform>();
+            //foreach(Transform child in GameObject.Find("SpawnPoints").transform)
+            //{
+            //    spawnPoints.Add(child);
+            //}
+
+            //for(int i = 0; i<GamePlayers.Count; i++)
+            //{
+            //    GamePlayers[i].transform.position = spawnPoints[i].position;
+            //    Debug.Log("Pos: " + GamePlayers[i].transform.position);
+            //    Debug.Log("name: " + GamePlayers[i]);
+            //}
         }
 
     }
