@@ -33,14 +33,17 @@ public class CharacterLookScript : NetworkBehaviour
     //called when the player starts
 
 
-    public void playerStart()
+    public void playerStart(int playerNum)
     {
         //checks for Network Game Player, and then uses these stored numbers to update appearance
         if (this.GetComponent<NetworkGamePlayer>() != null)
         {
-            changeType(this.GetComponent<NetworkGamePlayer>().typeNum);
-            changeHat(this.GetComponent<NetworkGamePlayer>().hatNum);
-            setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
+            //changeType(this.GetComponent<NetworkGamePlayer>().typeNum);
+            //changeHat(this.GetComponent<NetworkGamePlayer>().hatNum);
+            //setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
+            changeType(NetworkManagerOverride.typeNumbers[playerNum]);
+            changeHat(NetworkManagerOverride.hatNumbers[playerNum]);
+            setCircleColour(playerNum);
         }
     }
 

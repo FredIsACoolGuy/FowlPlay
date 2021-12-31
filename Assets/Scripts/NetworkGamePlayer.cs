@@ -40,7 +40,7 @@ public class NetworkGamePlayer : NetworkBehaviour
     {
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
-            Room.GamePlayers[i].GetComponent<CharacterLookScript>().playerStart();
+            Room.GamePlayers[i].GetComponent<CharacterLookScript>().playerStart(i);
         }
     }
 

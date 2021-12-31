@@ -99,7 +99,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
         ngp.SetHatNum(NetworkManagerOverride.hatNumbers[nextIndex]);
         ngp.SetPlayerNum(nextIndex);
         Room.GamePlayers.Add(ngp);
-        ngp.GetComponent<CharacterLookScript>().playerStart();
+        ngp.GetComponent<CharacterLookScript>().playerStart(nextIndex);
     }
 
     //[ClientRpc]
