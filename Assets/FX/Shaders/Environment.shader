@@ -1,4 +1,4 @@
-﻿Shader "Fowl Play/Environment"
+﻿Shader "FowlPlay/Environment"
 {
 
     Properties
@@ -11,7 +11,7 @@
         _ShadowStrength ("Strength", Range(0,1)) = 0.05
     }
 
-    CustomEditor "EnviroMatEditor"
+    CustomEditor "ShadowMatEditor"
 
     SubShader
     {

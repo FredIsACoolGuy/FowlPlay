@@ -1,4 +1,4 @@
-﻿Shader "Fowl Play/Character Hull"
+﻿Shader "FowlPlay/Character Hull"
 {
 
     Properties

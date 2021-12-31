@@ -2,6 +2,10 @@
 {
     Properties
     {
+        [Header(Shadows)]
+        _ShadowFactor ("Percent of Shadow", Range(0,1)) = 0.5
+        _ShadowStrength ("Strength", Range(0,1)) = 0.05
+
         [Header(Body)]
         _Color ("Color", Color) = (0,1,1,1)
         _SubTex ("Col Shift Tex", 2D) = "white" {}
@@ -30,18 +34,25 @@
         _DepthColor ("Color", Color) = (0,0,0.5,1)
         _DepthColorCutoff ("Depth Cutoff", Range(0,5)) = 1
     }
+
+    CustomEditor "ShadowMatEditor"
+
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry" }
         LOD 100
 
         Pass
         {
+            Tags {"LightMode" = "ForwardBase"}
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature _ SHADOWS_SCREEN
 
             #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
 
             struct appdata
             {
@@ -52,11 +63,15 @@
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
+                float4 pos : SV_POSITION;
                 float4 screenPos : TEXCOORD1;
+                SHADOW_COORDS(4)
             };
 
             sampler2D _CameraDepthTexture;
+            
+            float _ShadowFactor;
+            float _ShadowStrength;
 
             //main body
             half4 _Color;
@@ -92,9 +107,10 @@
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.screenPos = ComputeScreenPos(o.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.screenPos = ComputeScreenPos(o.pos);
                 o.uv = v.uv;
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
@@ -137,11 +153,91 @@
                 
                 col = foam < _FoamTexCutoff ? _FoamColor : col;
 
-                //waves
-                
+                //shadows
+                #if defined(SHADOWS_SCREEN)
+                float shadow = SHADOW_ATTENUATION(i);
+                col -= shadow < _ShadowFactor ? _ShadowStrength : 0;
+                #endif
                 
                 return col;
             }
+            ENDCG
+        }
+        
+        Pass
+        {
+            Tags { "LightMode" = "ForwardAdd" }
+            Blend One One
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma shader_feature _ SHADOWS_SCREEN
+
+            #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+            };
+
+            struct v2f
+            {
+                float4 pos : SV_POSITION;
+                SHADOW_COORDS(1)
+            };
+
+            float _ShadowFactor;
+            float _ShadowStrength;
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                TRANSFER_SHADOW(o);
+
+                return o;
+            }
+
+            half4 frag (v2f i) : SV_Target
+            {
+                #if defined(SHADOWS_SCREEN)
+                float shadow = SHADOW_ATTENUATION(i);
+                half4 col = shadow < _ShadowFactor ? -_ShadowStrength : 0;
+
+                return col;
+                #else
+                return 0;
+                #endif
+            }
+            ENDCG
+        }
+        
+        Pass //Shadow Caster
+        {
+            Tags { "LightMode" = "ShadowCaster" }
+            ZWrite Off
+
+            CGPROGRAM
+            #pragma fragment frag
+            #pragma vertex vert
+            #include "UnityCG.cginc"
+
+            struct appdata {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+            };
+
+            float4 vert (appdata v) : SV_POSITION {
+                float4 vertex = UnityClipSpaceShadowCasterPos(v.vertex, v.normal);
+                return UnityApplyLinearShadowBias(vertex);
+            }
+
+            half4 frag () : SV_Target {
+                return 0;
+            }
+
             ENDCG
         }
     }
