@@ -34,7 +34,8 @@ public class RoundManager : NetworkBehaviour
     {
         float waitTime = pickupSpawnInterval + Random.Range(-pickupSpawnInterval / 4f, pickupSpawnInterval / 4f);
         yield return new WaitForSeconds(waitTime);
-        Instantiate(pickup, pickupSpawnPoints[Random.Range(0, pickupSpawnPoints.Count)]);
+        GameObject pickupObject = Instantiate(pickup, pickupSpawnPoints[Random.Range(0, pickupSpawnPoints.Count)]);
+        NetworkServer.Spawn(pickupObject);
         StartCoroutine(PickupSpawner());
     }
 }
