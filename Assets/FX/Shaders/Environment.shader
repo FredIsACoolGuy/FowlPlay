@@ -5,6 +5,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
+        _TexStrength ("Texture Strength", Range(0,1)) = 0.1
 
         [Header(Shadows)]
         _ShadowFactor ("Percent of Shadow", Range(0,1)) = 0.5
@@ -47,6 +48,7 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            half _TexStrength;
             half4 _Color;
             float _ShadowFactor;
             float _ShadowStrength;
@@ -64,12 +66,14 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = _Color;
+                
+                col -= tex2D(_MainTex, i.uv).r * _TexStrength;
 
                 float shadow = SHADOW_ATTENUATION(i);
                 col -= shadow < _ShadowFactor ? _ShadowStrength : 0;
 
-                return col * _Color;
+                return col;
             }
             ENDCG
         }

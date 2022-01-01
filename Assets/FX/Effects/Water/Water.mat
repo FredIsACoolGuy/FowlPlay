@@ -74,13 +74,13 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ShadowFactor: 0.908
-    - _ShadowStrength: 0.769
+    - _ShadowFactor: 0.031
+    - _ShadowStrength: 0.038
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SubNoiseFactor: 0.49
-    - _SubWaveTexCutoff: 0.849
+    - _SubWaveTexCutoff: 0
     - _UVSec: 0
     - _WaveTexCutoff: 0.798
     - _ZWrite: 1
