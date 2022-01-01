@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class EnviroMatEditor : ShaderGUI
+public class ShadowMatEditor : ShaderGUI
 {
     public override void OnGUI (MaterialEditor materialEditor, MaterialProperty[] properties) {
 
