@@ -10,7 +10,7 @@ public class RoundManager : NetworkBehaviour
     private List<Transform> pickupSpawnPoints = new List<Transform>(); 
     int pickupSpawnInterval;
 
-    [Server]
+    [ServerCallback]
     void Start()
     {
         foreach(Transform child in this.transform)
@@ -25,17 +25,22 @@ public class RoundManager : NetworkBehaviour
         StartCoroutine(PickupSpawner());
     }
 
+    [Server]
     private IEnumerator RoundTimer()
     {
         yield return new WaitForSeconds(gameRules.timePerRound);
     }
 
+    [Server]
+
     private IEnumerator PickupSpawner()
     {
         float waitTime = pickupSpawnInterval + Random.Range(-pickupSpawnInterval / 4f, pickupSpawnInterval / 4f);
         yield return new WaitForSeconds(waitTime);
-        GameObject pickupObject = Instantiate(pickup, pickupSpawnPoints[Random.Range(0, pickupSpawnPoints.Count)]);
+        int posNum = Random.Range(0, pickupSpawnPoints.Count);
+        GameObject pickupObject = Instantiate(pickup, pickupSpawnPoints[posNum].position, Quaternion.identity);
         NetworkServer.Spawn(pickupObject);
+        pickupObject.transform.position = pickupSpawnPoints[posNum].position;
         StartCoroutine(PickupSpawner());
     }
 }

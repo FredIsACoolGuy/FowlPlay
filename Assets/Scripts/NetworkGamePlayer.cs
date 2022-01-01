@@ -19,7 +19,10 @@ public class NetworkGamePlayer : NetworkBehaviour
     [SyncVar]
     public int playerNum=0;
     #endregion
+    private CharacterLookScript charLookScript;
 
+
+    public NetworkConnection connection;
     //stores the network manager override
     private NetworkManagerOverride room;
     private NetworkManagerOverride Room
@@ -35,21 +38,57 @@ public class NetworkGamePlayer : NetworkBehaviour
         }
     }
     
+    [Client]
     //updates all player looks so they match the custom options picked by the players
     public void UpdateLooks()
     {
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
-            Room.GamePlayers[i].GetComponent<CharacterLookScript>().playerStart();
+            Debug.Log("UPDATE LOOKS: " + i + Room.GamePlayers[i]);
+            UpdateDisplay();
+            Room.GamePlayers[i].GetComponent<CharacterLookScript>().playerStart(i);
+        }
+    }
+
+    [Server]
+    private void UpdateDisplay()
+    {
+        //checks if the client has authority to run this code
+        if (!hasAuthority)
+        {
+            //hides UI for other clients so players can only see their own UI
+            //updates the player number incase some players have left since last update
+
+            foreach (var player in Room.GamePlayers)
+            {
+                if (player.hasAuthority)
+                {
+                    player.UpdateDisplay();
+                    break;
+                }
+            }
+
+            return;
+        }
+
+        int p = 0;
+        foreach (NetworkGamePlayer roomPlayer in Room.GamePlayers)
+        {
+            Debug.Log(roomPlayer.gameObject.name);
+            
+            roomPlayer.playerNum = p;
+            roomPlayer.charLookScript.changeType(roomPlayer.typeNum);
+            roomPlayer.charLookScript.changeHat(roomPlayer.hatNum);
+            p++;
         }
     }
 
     //overrides the OnStartClient which is called when the client starts
     public override void OnStartClient()
     {
+        charLookScript = this.GetComponent<CharacterLookScript>();
         //keep this gameobject from being destroyed between scenes
         DontDestroyOnLoad(this.gameObject);
-        //add to the list of players in the actual game in the Network Manager Override
         Room.GamePlayers.Add(this);
         //updates the players appearence
         UpdateLooks();
@@ -71,7 +110,7 @@ public class NetworkGamePlayer : NetworkBehaviour
     }
 
     [Server] //updates skin num
-    public void SetSkinNum(int num)
+    public void SetTypeNum(int num)
     {
         this.typeNum = num;      
     }
