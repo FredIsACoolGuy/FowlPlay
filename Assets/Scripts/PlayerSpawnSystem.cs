@@ -73,7 +73,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
        GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, Quaternion.identity);
 
-        StartCoroutine(delay(playerInstance, nextIndex, conn));
+       StartCoroutine(delay(playerInstance, nextIndex, conn));
        nextIndex++;
     }
 
@@ -92,10 +92,10 @@ public class PlayerSpawnSystem : NetworkBehaviour
     {
         //sets player position
         Debug.Log("Its happening");
-
-        ngp.SetDisplayName(NetworkManagerOverride.playerNames[num]);
-        ngp.SetTypeNum(NetworkManagerOverride.typeNumbers[num]);
-        ngp.SetHatNum(NetworkManagerOverride.hatNumbers[num]);
+        PlayerDataHolder pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
+        ngp.SetDisplayName(pdh.playerNames[num]);
+        ngp.SetTypeNum(pdh.typeNumbers[num]);
+        ngp.SetHatNum(pdh.hatNumbers[num]);
         ngp.SetPlayerNum(num);
         ngp.GetComponent<CharacterLookScript>().playerStart(num);
     }

@@ -39,9 +39,16 @@ public class CharacterLookScript : NetworkBehaviour
         //checks for Network Game Player, and then uses these stored numbers to update appearance
         if (this.GetComponent<NetworkGamePlayer>() != null)
         {
+            
+           PlayerDataHolder pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
+
+            Debug.Log(pdh.typeNumbers.Count);
+            //get values from lists
             this.GetComponent<NetworkGamePlayer>().playerNum = playerNum;
-            this.GetComponent<NetworkGamePlayer>().typeNum = NetworkManagerOverride.typeNumbers[playerNum];
-            this.GetComponent<NetworkGamePlayer>().hatNum = NetworkManagerOverride.hatNumbers[playerNum];
+            this.GetComponent<NetworkGamePlayer>().typeNum = pdh.typeNumbers[playerNum];
+            this.GetComponent<NetworkGamePlayer>().hatNum = pdh.hatNumbers[playerNum];
+           
+            //Actual appearance changing
             changeType(this.GetComponent<NetworkGamePlayer>().typeNum);
             changeHat(this.GetComponent<NetworkGamePlayer>().hatNum);
             setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);

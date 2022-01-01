@@ -27,10 +27,9 @@ public class NetworkManagerOverride : NetworkManager
     public static event Action OnClientDisconnected;
     public static event Action<NetworkConnection> OnServerReadied;
 
-
-    public static List<int> typeNumbers = new List<int>();
-    public static List<int> hatNumbers = new List<int>();
-    public static List<string> playerNames = new List<string>();
+    //public static List<int> typeNumbers = new List<int>();
+    //public static List<int> hatNumbers = new List<int>();
+    //public static List<string> playerNames = new List<string>();
 
 
 
@@ -170,35 +169,27 @@ public class NetworkManagerOverride : NetworkManager
     {
         if(SceneManager.GetActiveScene().path == menuScene)
         {
-            if (!IsReadyToStart()) { 
+           if (!IsReadyToStart()) { 
                 return; 
             }
 
             Debug.Log("LIST LENGTH: " + RoomPlayers.Count);
-            for (int i = 0; i < RoomPlayers.Count; i++)
-            {
-                Debug.Log(RoomPlayers[0].typeNum);
-                NetworkManagerOverride.typeNumbers.Add(RoomPlayers[i].typeNum);
-                NetworkManagerOverride.hatNumbers.Add(RoomPlayers[i].hatNum);
-                NetworkManagerOverride.playerNames.Add(RoomPlayers[i].name);
-            }
-
-            foreach (int num in NetworkManagerOverride.typeNumbers)
-            {
-                Debug.Log("In the list: " + num);
-            }
 
             ServerChangeScene("Map_01");
         }
     }
+
+
+
 
     //changes the scene on the server
     public override void ServerChangeScene(string newSceneName)
     {
         if(SceneManager.GetActiveScene().path == menuScene && newSceneName.StartsWith("Map"))
         {
-           for(int i = RoomPlayers.Count -1; i >= 0; i--)
+           for (int i = 0; i< RoomPlayers.Count; i++)
             {
+                //RoomPlayers[i].UpdateDataHolder();
                 //var conn = RoomPlayers[i].connectionToClient;
                 //var gameplayerInstance = Instantiate(gamePlayerPrefab);
                 //gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
@@ -215,6 +206,7 @@ public class NetworkManagerOverride : NetworkManager
         //does base code for server change scene
         base.ServerChangeScene(newSceneName);
     }
+
 
     //called when server scene has succesfully changed 
     public override void OnServerSceneChanged(string sceneName)

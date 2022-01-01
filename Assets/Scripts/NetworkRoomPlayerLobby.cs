@@ -114,6 +114,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         
         Room.RoomPlayers.Add(this);
 
+        //DontDestroyOnLoad(this.gameObject);
         //call update display to show new client
         UpdateDisplay();
     }
@@ -213,14 +214,16 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
             }
             p++;
         }
-
+     
 
         if (startGameButton != null)
         {
             startGameButton.interactable = canStartGame;
         }
-        //loop through all character models and if there is a client for each model it is set visible, otherwise it is hidden
+
         
+        //loop through all character models and if there is a client for each model it is set visible, otherwise it is hidden
+
     }
 
     public void positionCards(int num, int total)
@@ -440,7 +443,20 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     {
         IsReady = !IsReady;
         UpdateDisplay();
-        Room.NotifyPlayersOfReadyState();
+        if (IsReady)
+        {
+            foreach (NetworkRoomPlayerLobby roomPlayer in Room.RoomPlayers)
+            {
+                roomPlayer.callUpdate();
+            }
+        }
+            Room.NotifyPlayersOfReadyState();
+    }
+
+    [ClientRpc]
+    public void callUpdate()
+    {
+        UpdateDataHolder();     
     }
 
     [Command] //Starts the actual game
@@ -457,4 +473,27 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     }
     #endregion
 
+
+
+
+    [Client]
+    public void UpdateDataHolder()
+    {
+        if (hasAuthority)
+        {
+            PlayerDataHolder pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
+
+            pdh.typeNumbers.Clear();
+            pdh.hatNumbers.Clear();
+            pdh.playerNames.Clear();
+
+            for (int i = 0; i < Room.RoomPlayers.Count; i++)
+            {
+                Debug.Log(Room.RoomPlayers[0].typeNum);
+                pdh.typeNumbers.Add(Room.RoomPlayers[i].typeNum);
+                pdh.hatNumbers.Add(Room.RoomPlayers[i].hatNum);
+                pdh.playerNames.Add(Room.RoomPlayers[i].DisplayName);
+            }
+        }
+    }
 }

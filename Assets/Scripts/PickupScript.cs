@@ -20,6 +20,6 @@ public class PickupScript : NetworkBehaviour
     [Server]
     private void OnTriggerEnter(Collider other)
     {
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 }
