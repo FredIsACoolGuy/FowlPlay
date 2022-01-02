@@ -22,18 +22,22 @@ MonoBehaviour:
   - {r: 0.7294118, g: 0.882353, b: 0.32156864, a: 1}
   - {r: 1, g: 0.7137255, b: 0.9568628, a: 1}
   typeMeshes:
-  - {fileID: 7006464153296868531, guid: 07682f71dd7915c498b39a0fd15f95ed, type: 3}
-  - {fileID: 6386567587653721996, guid: bb9c050db02248547861a24002ab4460, type: 3}
-  - {fileID: 7471412251161517365, guid: 882c97fa3320bb741a8efd73a4bb7d4d, type: 3}
+  - {fileID: 3199738788517908876, guid: 53be768dfd1faf7478bc931eba236ce2, type: 3}
+  - {fileID: 8013040712368785481, guid: c8de331a8831ada49a3984e0aefdd9b4, type: 3}
+  - {fileID: 8566035865382312653, guid: f6b5f9d3add1d054896a5f7b4d28dc39, type: 3}
+  - {fileID: 3598496224466977691, guid: a6f1cb1da0f5da442801c2370ac45a13, type: 3}
   typeNames:
-  - Penguin
-  - Seagull
   - Duck
+  - Goose
+  - Penguin
+  - Cayuga
   hatMeshes:
-  - {fileID: 4396168465098250402, guid: e23a68d13d2698e4393bd7bca23039be, type: 3}
-  - {fileID: 5518055503957743400, guid: 44a13b8238ca29c4fb251341266abfbf, type: 3}
-  - {fileID: 6379964282279884179, guid: a55cef4ada54e0b4b9634753320da0ff, type: 3}
+  - {fileID: 3610272347860685484, guid: d2254d477127b3f40a1f330b1519fc21, type: 3}
+  - {fileID: 4499804081341295016, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
+  - {fileID: 8841188982742718460, guid: f991ba4d768d098439048a789fc97637, type: 3}
+  - {fileID: 4549293631771535140, guid: 7b8f3681e66d6224098055c6eae96455, type: 3}
   hatNames:
-  - Crown
-  - Top Hat
-  - Baseball Cap
+  - Party Hat
+  - Golden Goose
+  - Fez
+  - Cowboy Hat

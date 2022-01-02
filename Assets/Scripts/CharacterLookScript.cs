@@ -71,7 +71,8 @@ public class CharacterLookScript : NetworkBehaviour
 
         if (currentHat != null)
         {
-            currentHat.transform.position = currentBird.transform.Find("HatPoint").position;
+            currentHat.transform.parent = currentBird.transform.GetComponentInChildren<OutlineColor>().transform;
+            currentHat.transform.localPosition = Vector3.zero;
         }
 
         if (typeText != null)
@@ -91,8 +92,8 @@ public class CharacterLookScript : NetworkBehaviour
 
         if (currentBird != null)
         {
-            currentHat = Instantiate(data.hatMeshes[hatNum], currentBird.transform);
-            currentHat.transform.position = currentBird.transform.Find("HatPoint").position;
+            currentHat = Instantiate(data.hatMeshes[hatNum], currentBird.transform.GetComponentInChildren<OutlineColor>().transform);
+            currentHat.transform.localPosition = Vector3.zero;
         }
 
         if (hatText != null)
