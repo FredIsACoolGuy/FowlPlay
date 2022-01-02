@@ -52,10 +52,12 @@ public class SteamFindFriendsLobbies : MonoBehaviour
         {
             //gets the steam info about the friend using their index number
             FriendGameInfo_t friendInfo;
-            CSteamID steamIdFriend = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate); 
-            
+            CSteamID steamIdFriend = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate);
+
+            CGameID gameID = (CGameID)480;
+
             //checks the friend is in a valid lobby
-            if(SteamFriends.GetFriendGamePlayed(steamIdFriend, out friendInfo) && friendInfo.m_steamIDLobby.IsValid())
+            if (SteamFriends.GetFriendGamePlayed(steamIdFriend, out friendInfo) && friendInfo.m_steamIDLobby.IsValid() && friendInfo.m_gameID == gameID)
             {
                 //disables the no friends online message
                 friendName.enabled = false;

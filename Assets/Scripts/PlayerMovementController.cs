@@ -9,6 +9,7 @@ namespace Multiplayer.GameControls
     {
         public float normalMovementSpeed = 5f;
         public float movementSpeed = 5f;
+        private float currentSpeed=0f;
         public float turnSpeed = 5f;
         [SerializeField] private CharacterController controller = null;
 
@@ -55,17 +56,38 @@ namespace Multiplayer.GameControls
 
         private void Update()
         {
-            if (knocked)
+            if (falling)
+            {
+                Fall();
+            }
+            else if (knocked)
             {
                 controller.Move(knockDir * Time.deltaTime);
             }
             else if (attacking)
             {
-                controller.Move(attackDir *  Time.deltaTime);
+                controller.Move(attackDir * Time.deltaTime);
             }
             else
             {
                 Move();
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+
+            if (other.CompareTag("AttackZone"))
+            {
+                Knockback(other.transform.parent.position);
+            }
+
+            if (other.CompareTag("Pit"))
+            {
+                Debug.Log("Pitted");
+                targetPitCentre = other.transform;
+                falling = true;
+
             }
         }
 
@@ -83,6 +105,7 @@ namespace Multiplayer.GameControls
         }
 
         public Vector3 facingDir;
+        private Vector3 prevMovement;
         [Client]
         private void Move()
         {
@@ -90,17 +113,24 @@ namespace Multiplayer.GameControls
             Vector3 right = controller.transform.right;
             Vector3 forward = controller.transform.forward;
             right.y = 0f;
-            forward.y = 0f;
+            forward.y = 0f;  
 
-            Vector3 movement = right.normalized * prevInput.x + forward.normalized * prevInput.y;
 
-            controller.Move(movement * movementSpeed * Time.deltaTime);
+            if (prevInput == Vector2.zero)
+            {
+                controller.Move(prevMovement * Decelerate() * Time.deltaTime);
+            }
+            else
+            {
+                prevMovement = right.normalized * prevInput.x + forward.normalized * prevInput.y;
+                controller.Move(prevMovement * Accelerate() * Time.deltaTime);
+            }            
 
             if(aimingVec == Vector3.zero)
             {
                 if (prevInput != Vector2.zero)
                 {
-                    facingDir = movement.normalized;
+                    facingDir = prevMovement.normalized;
                 }
             }
             else
@@ -110,6 +140,34 @@ namespace Multiplayer.GameControls
 
             playerMesh.eulerAngles = new Vector3(0f, Mathf.LerpAngle(playerMesh.eulerAngles.y, Vector3.SignedAngle(Vector3.right, facingDir, Vector3.up), Time.deltaTime * turnSpeed), 0f);
         }
+
+        [Header("ACCELERATION")]
+        public float accelerationSpeed;
+        public float Accelerate()
+        {
+            currentSpeed = Mathf.Min(currentSpeed + (accelerationSpeed * Time.deltaTime),movementSpeed);
+            return currentSpeed;
+        }
+
+        [Header("DECELERATION")]
+        public float decelerationSpeed;
+        public float Decelerate()
+        {
+            currentSpeed = Mathf.Max(currentSpeed - (decelerationSpeed * Time.deltaTime), 0f);
+            return currentSpeed;
+        }
+
+        [Header("FALLING")]
+
+        public bool falling;
+        public Transform targetPitCentre;
+        public float fallSpeed;
+        public void Fall()
+        {
+            controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
+        }
+
+        [Header("ATTACKING")]
 
         private Vector3 attackDir;
         public bool attacking;
@@ -131,6 +189,8 @@ namespace Multiplayer.GameControls
             attackCollider.enabled = false;
 
         }
+
+        [Header("KNOCKBACK")]
 
         public bool knocked;
         private Vector3 knockDir;

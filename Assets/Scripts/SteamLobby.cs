@@ -151,9 +151,10 @@ public class SteamLobby : MonoBehaviour
         //gets player info from steam
         FriendGameInfo_t playerInfo;
         SteamFriends.GetFriendGamePlayed(SteamUser.GetSteamID(), out playerInfo);
-
+        Debug.Log("LeavingLobby");
         //leaves the current lobby
         SteamMatchmaking.LeaveLobby(playerInfo.m_steamIDLobby);
+        
     }
 
 

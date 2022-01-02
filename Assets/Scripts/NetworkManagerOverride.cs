@@ -57,9 +57,12 @@ public class NetworkManagerOverride : NetworkManager
     //called on client when connecting to the server
     public override void OnClientConnect(NetworkConnection conn)
     {
+        Debug.Log("HOOOWEEE BOYS");
+
         base.OnClientConnect(conn);
 
         OnClientConnected?.Invoke();
+
     }
 
     //called on client when disconnecting from the server
@@ -71,7 +74,6 @@ public class NetworkManagerOverride : NetworkManager
             GetComponent<SteamLobby>().ClientDisconnect();
         }
         base.OnClientDisconnect(conn);
-
         OnClientDisconnected?.Invoke();
     }
 
@@ -131,6 +133,7 @@ public class NetworkManagerOverride : NetworkManager
     public override void OnStopServer()
     {
         //clears list of players
+        Debug.Log("FRED IS GREAT AT CODE");
         RoomPlayers.Clear();
     }
 
