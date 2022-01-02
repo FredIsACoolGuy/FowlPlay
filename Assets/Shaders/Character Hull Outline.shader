@@ -142,8 +142,10 @@
 
             float4 vert (appdata v) : SV_POSITION
             {
-                float4 normal = float4(normalize(v.normal) * _OutlineThickness, 0);
-                float4 pos = UnityObjectToClipPos(v.vertex + normal);
+                float4 normal = float4(normalize(mul(unity_ObjectToWorld, v.normal).rgb) * _OutlineThickness, 0);
+                float4 pos = mul(unity_ObjectToWorld, v.vertex);
+                pos += normal;
+                pos = mul(UNITY_MATRIX_VP, pos);
                 return pos;
             }
 
