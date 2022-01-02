@@ -39,14 +39,19 @@ public class DisconnectFromGameButton : MonoBehaviour
             //networkManager.GetComponent<NetworkManagerOverride>().StopClient();
             //networkManager.GetComponent<NetworkManagerOverride>().StopServer();
             
-            NetworkManager.singleton.StopHost();
+            NetworkClient.Shutdown();
             NetworkServer.Shutdown();
+            NetworkManager.singleton.StopHost();
+
             //networkManager.GetComponent<FizzySteamworks>().Shutdown();
         }
         else
         {
             //networkManager.GetComponent<NetworkManagerOverride>().StopClient();
+            NetworkClient.Shutdown();
+            NetworkServer.Shutdown();
             NetworkManager.singleton.StopClient();
+
         }
 
         //if the network manager has the steam lobby component then the steam lobby has to be disconnected

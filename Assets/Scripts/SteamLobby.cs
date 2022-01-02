@@ -13,7 +13,7 @@ public class SteamLobby : MonoBehaviour
     protected Callback<LobbyEnter_t> lobbyEntered;
 
     //stores the network manager
-    private NetworkManager networkManager;
+    private NetworkManagerOverride networkManager;
 
     //stores the adress key for the hostAddress
     private const string hostAddressKey = "hostAddress";
@@ -25,7 +25,7 @@ public class SteamLobby : MonoBehaviour
     private void Start()
     {
         Debug.Log(this.name);
-        networkManager = GetComponent<NetworkManager>();
+        networkManager = GetComponent<NetworkManagerOverride>();
 
         //if the steam manager is not initialized then return, otherwise continue
         if (!SteamManager.Initialized)
@@ -70,9 +70,11 @@ public class SteamLobby : MonoBehaviour
             Debug.Log("failed to connect");
             return;
         }
-
+        Debug.Log("PreAss" + networkManager);
         //otherwise start a host using Mirror
         networkManager.StartHost();
+        Debug.Log("PostAss");
+
         //get lobby data from steam
         lobbyID = new CSteamID(callback.m_ulSteamIDLobby);
         //set metadata about the lobby using the lobby ID
@@ -131,6 +133,7 @@ public class SteamLobby : MonoBehaviour
 
         //use host address to connect to the Mirror host
         networkManager.networkAddress = hostAddress;
+        
         networkManager.StartClient();
 
         //if title is active then hide it

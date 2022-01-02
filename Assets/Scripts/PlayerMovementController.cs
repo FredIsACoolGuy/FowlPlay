@@ -164,6 +164,7 @@ namespace Multiplayer.GameControls
         public float fallSpeed;
         public void Fall()
         {
+            controller.detectCollisions =false;
             controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
         }
 
