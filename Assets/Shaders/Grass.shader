@@ -10,7 +10,6 @@
 
         [Header(Base Texture)][Space]
         _MainTex ("Texture", 2D) = "white" {}
-        _MainTexVel ("Texture Velocity", Vector) = (0,0,0,0)
         _TexStrength ("Texture Strength", Range(0,1)) = 0.1
 
         [Header(Distortion)][Space]
@@ -75,7 +74,6 @@
             //Base Texture
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float2 _MainTexVel;
             half _TexStrength;
 
             //Distortion
@@ -128,10 +126,9 @@
                 distortStrength = sin(distortStrength * 3.14159265) * 0.5 + 0.5;
 
                 half2 distortedUV = i.uv + normalize(_DistortDir) * _DistortStrength * distortStrength;
-                distortedUV = distortedUV % 1;
 
                 //textures
-                half tex = tex2D(_MainTex, TRANSFORM_TEX(distortedUV, _MainTex) + _MainTexVel * _Time[1]).r;
+                half tex = tex2D(_MainTex, TRANSFORM_TEX(distortedUV, _MainTex)).r;
 
                 tex -= (1 - tex2D(_SubTexHard, TRANSFORM_TEX(i.uv, _SubTexHard) + _HardSubVel * _Time[1]).r) * _HardSubStrength;
                 tex = saturate(tex);
