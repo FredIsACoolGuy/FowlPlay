@@ -22,11 +22,19 @@ public class CharacterLookScript : NetworkBehaviour
 
     private GameObject currentBird;
 
+    private float lineWeightMultiplier = 1f; 
+
     public override void OnStartAuthority()
     { 
         if(circle != null)
         {
             circle.enabled = true;
+        }
+
+        if (this.GetComponent<NetworkGamePlayer>() == null)
+        {
+            lineWeightMultiplier = 16f;
+
         }
     }
 
@@ -54,8 +62,9 @@ public class CharacterLookScript : NetworkBehaviour
             setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
             //callChangeAppearence(NetworkManagerOverride.typeNumbers[playerNum], NetworkManagerOverride.hatNumbers[playerNum], playerNum);
             //callChangeAppearence(0, 0, playerNum);
-
+            lineWeightMultiplier = 1f;
         }
+
     }
 
     [Client]
@@ -68,6 +77,8 @@ public class CharacterLookScript : NetworkBehaviour
         }
         
         currentBird = Instantiate(data.typeMeshes[typeNum], characterMeshHolder);
+
+        currentBird.transform.GetComponentInChildren<OutlineColor>().lineWeightMultiplier = lineWeightMultiplier;
 
         if (currentHat != null)
         {

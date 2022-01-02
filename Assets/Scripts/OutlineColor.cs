@@ -9,7 +9,7 @@ public class OutlineColor : MonoBehaviour
     [SerializeField] bool isBird = false;
     public float lineWeightMultiplier = 1;
 
-    private void Awake() {
+    private void Start() {
         if (isBird) {
             outlineColor = renderer.material.GetColor("_OutlineColor");
             if (lineWeightMultiplier != 1) {
