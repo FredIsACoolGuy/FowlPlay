@@ -7,7 +7,7 @@ public class OutlineColor : MonoBehaviour
     [HideInInspector] public Color outlineColor;
     [SerializeField] Renderer renderer;
     [SerializeField] bool isBird = false;
-    [SerializeField] float lineWeightMultiplier = 1;
+    public float lineWeightMultiplier = 1;
 
     private void Awake() {
         if (isBird) {
@@ -28,7 +28,9 @@ public class OutlineColor : MonoBehaviour
     IEnumerator SetColor() {
         yield return new WaitForEndOfFrame();
 
-        Color col = transform.parent.GetComponent<OutlineColor>().outlineColor;
+        OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
+        Color col = parentScript.outlineColor;
+        float parentMultiplier = parentScript.lineWeightMultiplier;
 
         if (renderer == null)
             renderer = GetComponent<Renderer>();
@@ -37,7 +39,7 @@ public class OutlineColor : MonoBehaviour
         float lineWeight = mats[0].GetFloat("_OutlineThickness");
         foreach (Material mat in mats) {
             mat.SetColor("_OutlineColor", col);
-            mat.SetFloat("_OutlineThickness", lineWeight * lineWeightMultiplier);
+            mat.SetFloat("_OutlineThickness", lineWeight * parentMultiplier);
         }
     }
 }
