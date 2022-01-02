@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AddTex:
+        m_Texture: {fileID: 2800000, guid: 689f1c5f820991142bc81a96ff1fa350, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -35,13 +39,17 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 2800000, guid: eec61efe88a53594ebbd70e8a717101f, type: 3}
+        m_Scale: {x: 1.88, y: 1.81}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1ab5f1043b5d1e743869e6e819f59dda, type: 3}
-        m_Scale: {x: 5, y: 5}
+        m_Texture: {fileID: 2800000, guid: 9e95703322c358f4c92ce120e3eb68e7, type: 3}
+        m_Scale: {x: 6.87, y: 20.14}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -55,14 +63,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SubTexHard:
+        m_Texture: {fileID: 2800000, guid: 1ab5f1043b5d1e743869e6e819f59dda, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    - _SubTexSoft:
+        m_Texture: {fileID: 2800000, guid: 5fcb24a412588f74a8676339b03f8b26, type: 3}
+        m_Scale: {x: 4.6, y: 3.73}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AddTexStrength: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DistortSpeed: 0.15
+    - _DistortStrength: 0.036
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HardSubStrength: 0.659
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -70,12 +90,19 @@ Material:
     - _ShadowFactor: 0.9
     - _ShadowStrength: 0.086
     - _SmoothnessTextureChannel: 0
+    - _SoftSubStrength: 0.544
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TexStrength: 0.016
+    - _TexStrength: 0.093
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _AddTexVel: {r: 0, g: 0, b: 0, a: 0}
+    - _ColShiftVel: {r: 0.02, g: 0.06, b: 0, a: 0}
     - _Color: {r: 0.5372549, g: 0.7254902, b: 0.4, a: 1}
+    - _Color2: {r: 0.7240086, g: 0.8018868, b: 0.4190993, a: 0.8666667}
+    - _DistortDir: {r: 0.01, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HardSubVel: {r: -0.003, g: 0.01, b: 0, a: 0}
+    - _SoftSubVel: {r: 0.0033, g: 0.04, b: 0, a: 0}
   m_BuildTextureStacks: []
