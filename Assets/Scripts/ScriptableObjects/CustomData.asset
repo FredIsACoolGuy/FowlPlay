@@ -23,9 +23,9 @@ MonoBehaviour:
   - {r: 1, g: 0.7137255, b: 0.9568628, a: 1}
   typeMeshes:
   - {fileID: 3199738788517908876, guid: 53be768dfd1faf7478bc931eba236ce2, type: 3}
-  - {fileID: 8013040712368785481, guid: c8de331a8831ada49a3984e0aefdd9b4, type: 3}
+  - {fileID: 2254759824460387535, guid: eb11975ebab7b864999fc7e5dafe680e, type: 3}
   - {fileID: 8566035865382312653, guid: f6b5f9d3add1d054896a5f7b4d28dc39, type: 3}
-  - {fileID: 3598496224466977691, guid: a6f1cb1da0f5da442801c2370ac45a13, type: 3}
+  - {fileID: 2666314678967302658, guid: c5e0ac63cd568c940ad47988e0fbaa40, type: 3}
   typeNames:
   - Duck
   - Goose
@@ -36,8 +36,16 @@ MonoBehaviour:
   - {fileID: 4499804081341295016, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
   - {fileID: 8841188982742718460, guid: f991ba4d768d098439048a789fc97637, type: 3}
   - {fileID: 4549293631771535140, guid: 7b8f3681e66d6224098055c6eae96455, type: 3}
+  - {fileID: 6452602901436720051, guid: d8ff7b69ee4ce7c478bde096bb5577da, type: 3}
+  - {fileID: 2550978011625377337, guid: 59e015b4040c0c046ade130fb2c979c2, type: 3}
+  - {fileID: 9047295168665053847, guid: 49c5a282e5861dd439a556ca27f6dec0, type: 3}
+  - {fileID: 7288543202414086890, guid: 0d52999bd08642448a67d7bd11beb60a, type: 3}
   hatNames:
   - Party Hat
   - Golden Goose
   - Fez
   - Cowboy Hat
+  - Fedora
+  - Froggy Bucket
+  - Grad Cap
+  - Top Hat

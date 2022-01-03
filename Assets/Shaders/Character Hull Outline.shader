@@ -77,6 +77,7 @@
         {
             Tags { "LightMode" = "ForwardAdd" }
             Blend One One
+            ZWrite Off
 
             CGPROGRAM
             #pragma vertex vert
@@ -122,8 +123,9 @@
         
         Pass
         {
-            Cull Front
             Tags { "LightMode" = "Always" }
+            Cull Front
+            ZWrite Off
 
             CGPROGRAM
             #pragma vertex vert
