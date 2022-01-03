@@ -174,12 +174,15 @@ namespace Multiplayer.GameControls
         public bool attacking;
         public float attackSpeed = 10f;
         public float attackTimeMultiplier;
-        [Client]
+
+        [Server]
         public void Attack(float attackAmount)
         {
            attackDir = facingDir * attackSpeed * attackAmount;
            StartCoroutine(doAttack(attackAmount * attackTimeMultiplier));
         }
+
+
 
         private IEnumerator doAttack(float attackTime)
         {

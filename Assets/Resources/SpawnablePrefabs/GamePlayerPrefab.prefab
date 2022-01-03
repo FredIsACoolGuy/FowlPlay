@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2949772321263007036}
   - component: {fileID: 3544278924799362266}
+  - component: {fileID: 5380583736752752129}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 4484725578676687898}
+  m_LookAt: {fileID: 8329394492751204481}
   m_Follow: {fileID: 4484725578676687898}
   m_Lens:
     FieldOfView: 40
@@ -97,6 +98,22 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 49998422288171668}
+--- !u!114 &5380583736752752129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579604573884536040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f59fd03bb332b04f80a8005b2526000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultShakeAmount: 0.6
+  defaultShakeSpeed: 50
+  defaultShakeTime: 0.5
+  shaking: 0
 --- !u!1 &3301674118368335213
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +547,7 @@ MonoBehaviour:
   lineSpeed: 4
   maxLineLength: 5.1
   maxTimeHeld: 2
+  cameraShakeScript: {fileID: 5380583736752752129}
 --- !u!120 &3996463588608416419
 LineRenderer:
   m_ObjectHideFlags: 0
