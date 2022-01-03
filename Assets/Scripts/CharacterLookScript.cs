@@ -22,20 +22,13 @@ public class CharacterLookScript : NetworkBehaviour
 
     private GameObject currentBird;
 
-    private float lineWeightMultiplier = 1f; 
-
     public override void OnStartAuthority()
     { 
         if(circle != null)
         {
             circle.enabled = true;
         }
-
-        if (this.GetComponent<NetworkGamePlayer>() == null)
-        {
-            lineWeightMultiplier = 16f;
-
-        }
+        
     }
 
     //called when the player starts
@@ -62,28 +55,27 @@ public class CharacterLookScript : NetworkBehaviour
             setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
             //callChangeAppearence(NetworkManagerOverride.typeNumbers[playerNum], NetworkManagerOverride.hatNumbers[playerNum], playerNum);
             //callChangeAppearence(0, 0, playerNum);
-            lineWeightMultiplier = 1f;
         }
 
     }
 
     [Client]
     //changes the material on the mesh renderer
-    public void changeType(int typeNum)
-    {
-        if (currentBird != null)
-        {
+    public void changeType(int typeNum) {
+        if (currentBird != null) {
             Destroy(currentBird);
         }
-        
+
         currentBird = Instantiate(data.typeMeshes[typeNum], characterMeshHolder);
 
-        currentBird.transform.GetComponentInChildren<OutlineColor>().lineWeightMultiplier = lineWeightMultiplier;
+        OutlineColor hatAnchor = currentBird.transform.GetComponentInChildren<OutlineColor>();
+        if (GetComponent<NetworkGamePlayer>() == null) { 
+            hatAnchor.MultiplyLineWeight(16);
+        }
 
         if (currentHat != null)
         {
-            currentHat.transform.parent = currentBird.transform.GetComponentInChildren<OutlineColor>().transform;
-            currentHat.transform.localPosition = Vector3.zero;
+            currentHat.transform.parent = hatAnchor.transform;
         }
 
         if (typeText != null)

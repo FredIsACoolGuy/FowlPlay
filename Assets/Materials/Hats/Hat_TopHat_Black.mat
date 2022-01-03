@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Penguin_Yellow
+  m_Name: Hat_TopHat_Black
   m_Shader: {fileID: 4800000, guid: 3887cfc821b37f34a915103c7e72dc40, type: 3}
-  m_ShaderKeywords: SHADOWS_SCREEN
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -66,17 +66,17 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineThickness: 0.058
+    - _OutlineThickness: 0.057
     - _Parallax: 0.02
-    - _ShadowFactor: 0.946
-    - _ShadowStrength: 0.086
+    - _ShadowFactor: 0.953
+    - _ShadowStrength: 0.081
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.80405074, g: 0.8301887, b: 0.15977213, a: 1}
+    - _Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
+    - _OutlineColor: {r: 0.99348736, g: 0, b: 1, a: 1}
   m_BuildTextureStacks: []

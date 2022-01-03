@@ -69,7 +69,7 @@ Material:
     - _OutlineThickness: 0.058
     - _Parallax: 0.02
     - _ShadowFactor: 0.946
-    - _ShadowStrength: 0.043
+    - _ShadowStrength: 0.086
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -78,5 +78,5 @@ Material:
     m_Colors:
     - _Color: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+    - _OutlineColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
   m_BuildTextureStacks: []
