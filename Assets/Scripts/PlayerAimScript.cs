@@ -25,6 +25,8 @@ namespace Multiplayer.GameControls
         public float maxLineLength = 5f;
         public float maxTimeHeld = 2f;
 
+        public CameraShakeScript cameraShakeScript;
+
         private PlayerMovementController movementController;
         private GameControls Controls
         {
@@ -66,6 +68,12 @@ namespace Multiplayer.GameControls
             Controls.Disable();
         }
 
+
+        [ClientCallback]
+        private void OnDestroy()
+        {
+            Controls.Disable();
+        }
         float timeHeld;
         private void Fire(float value)
         {
@@ -109,7 +117,7 @@ namespace Multiplayer.GameControls
             pointerOffset = mousePos - new Vector2(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
         }
 
-
+        [Client]
         private void Update()
         {
             if (simpleFireHeld)
@@ -129,6 +137,13 @@ namespace Multiplayer.GameControls
                 movementController.movementSpeed = movementController.normalMovementSpeed;
                 //do attack
                 movementController.Attack(Mathf.Clamp(timeHeld, 0f, maxTimeHeld));
+
+                cameraShakeScript.CameraShake(0.6f, 50, timeHeld * 0.25f);
+                cameraShakeScript.cameraZoom = 1.2f;
+            }
+            else
+            {
+                target.position = Vector3.Lerp(target.position, transform.position, Time.deltaTime);
             }
         }
 

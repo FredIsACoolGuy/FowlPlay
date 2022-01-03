@@ -23,6 +23,7 @@ namespace Multiplayer.GameControls
 
         public SphereCollider attackCollider;
 
+        private int playerNum;
         private GameControls Controls
         {
             get
@@ -38,6 +39,8 @@ namespace Multiplayer.GameControls
 
             Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
             Controls.Player.Move.canceled += ctx => ResetMovement();
+
+            playerNum = GetComponent<NetworkGamePlayer>().playerNum;
         }
 
 
@@ -62,10 +65,11 @@ namespace Multiplayer.GameControls
             }
             else if (knocked)
             {
-                controller.Move(knockDir * Time.deltaTime);
+                controller.Move(knockDir * knockPowerMultiplier* Time.deltaTime);
             }
             else if (attacking)
             {
+                CheckAttackZone(this.transform, facingDir);
                 controller.Move(attackDir * Time.deltaTime);
             }
             else
@@ -76,12 +80,6 @@ namespace Multiplayer.GameControls
 
         private void OnTriggerEnter(Collider other)
         {
-
-            if (other.CompareTag("AttackZone"))
-            {
-                Knockback(other.transform.parent.position);
-            }
-
             if (other.CompareTag("Pit"))
             {
                 Debug.Log("Pitted");
@@ -164,6 +162,7 @@ namespace Multiplayer.GameControls
         public float fallSpeed;
         public void Fall()
         {
+            controller.detectCollisions =false;
             controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
         }
 
@@ -173,7 +172,9 @@ namespace Multiplayer.GameControls
         public bool attacking;
         public float attackSpeed = 10f;
         public float attackTimeMultiplier;
-        [Client]
+        public float overlapRadius;
+        public float overlapOffset;
+
         public void Attack(float attackAmount)
         {
            attackDir = facingDir * attackSpeed * attackAmount;
@@ -183,26 +184,40 @@ namespace Multiplayer.GameControls
         private IEnumerator doAttack(float attackTime)
         {
             attacking = true;
-            attackCollider.enabled = true;
             yield return new WaitForSeconds(attackTime);
             attacking = false;
-            attackCollider.enabled = false;
+        }
 
+
+        [Command]
+        public void CheckAttackZone(Transform attacker, Vector3 attackVector)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(attacker.position + (attackVector.normalized*overlapOffset),overlapRadius);
+            foreach(Collider col in hitColliders)
+            {
+                if (!col.CompareTag("Player") || col.transform == attacker)
+                {
+                    break;
+                }
+
+                col.GetComponent<PlayerMovementController>().Knockback(attacker.position, attackVector.magnitude);
+            }
         }
 
         [Header("KNOCKBACK")]
 
         public bool knocked;
         private Vector3 knockDir;
+        public float knockPowerMultiplier;
         public float knockTimeMultiplier;
-        [Client]
-        public void Knockback(Vector3 hitFrom)
+        [ClientRpc]
+        public void Knockback(Vector3 hitFrom, float power)
         {
             Debug.Log("KNOCKED");
             knockDir = transform.position - hitFrom;
-            knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized;
+            knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
-            StartCoroutine(doKnockback(1f*knockTimeMultiplier));
+            StartCoroutine(doKnockback(knockTimeMultiplier));
         }
 
         private IEnumerator doKnockback(float knockTime)
@@ -212,5 +227,18 @@ namespace Multiplayer.GameControls
             knocked = false;
         }
 
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            if (facingDir != Vector3.zero)
+            {
+                Gizmos.DrawWireSphere(transform.position + facingDir.normalized * overlapOffset, overlapRadius);
+            }
+            else
+            {
+                Gizmos.DrawWireSphere(transform.position + Vector3.right * overlapOffset, overlapRadius);
+            }
+        }
     }
 }
