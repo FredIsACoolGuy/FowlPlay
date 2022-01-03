@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class PanelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private List<GameObject> _panels;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         
     }
