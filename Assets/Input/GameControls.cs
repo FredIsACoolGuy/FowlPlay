@@ -51,6 +51,14 @@ namespace Multiplayer.GameControls
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""DebugButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""ffbd344a-abc2-40d1-8ca3-f238b70babaa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -60,7 +68,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -82,7 +90,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -93,7 +101,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -104,7 +112,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -115,7 +123,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -126,7 +134,7 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -137,8 +145,19 @@ namespace Multiplayer.GameControls
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboadAndMouse"",
+                    ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""SimpleFire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7e97a2b-4452-4b3a-ab58-816692630934"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""DebugButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -147,8 +166,8 @@ namespace Multiplayer.GameControls
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""KeyboadAndMouse"",
-            ""bindingGroup"": ""KeyboadAndMouse"",
+            ""name"": ""KeyboardAndMouse"",
+            ""bindingGroup"": ""KeyboardAndMouse"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
@@ -170,6 +189,7 @@ namespace Multiplayer.GameControls
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_SimpleFire = m_Player.FindAction("SimpleFire", throwIfNotFound: true);
+            m_Player_DebugButton = m_Player.FindAction("DebugButton", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -223,6 +243,7 @@ namespace Multiplayer.GameControls
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_SimpleFire;
+        private readonly InputAction m_Player_DebugButton;
         public struct PlayerActions
         {
             private @GameControls m_Wrapper;
@@ -231,6 +252,7 @@ namespace Multiplayer.GameControls
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @SimpleFire => m_Wrapper.m_Player_SimpleFire;
+            public InputAction @DebugButton => m_Wrapper.m_Player_DebugButton;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -252,6 +274,9 @@ namespace Multiplayer.GameControls
                     @SimpleFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSimpleFire;
                     @SimpleFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSimpleFire;
                     @SimpleFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSimpleFire;
+                    @DebugButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
+                    @DebugButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
+                    @DebugButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -268,17 +293,20 @@ namespace Multiplayer.GameControls
                     @SimpleFire.started += instance.OnSimpleFire;
                     @SimpleFire.performed += instance.OnSimpleFire;
                     @SimpleFire.canceled += instance.OnSimpleFire;
+                    @DebugButton.started += instance.OnDebugButton;
+                    @DebugButton.performed += instance.OnDebugButton;
+                    @DebugButton.canceled += instance.OnDebugButton;
                 }
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
-        private int m_KeyboadAndMouseSchemeIndex = -1;
-        public InputControlScheme KeyboadAndMouseScheme
+        private int m_KeyboardAndMouseSchemeIndex = -1;
+        public InputControlScheme KeyboardAndMouseScheme
         {
             get
             {
-                if (m_KeyboadAndMouseSchemeIndex == -1) m_KeyboadAndMouseSchemeIndex = asset.FindControlSchemeIndex("KeyboadAndMouse");
-                return asset.controlSchemes[m_KeyboadAndMouseSchemeIndex];
+                if (m_KeyboardAndMouseSchemeIndex == -1) m_KeyboardAndMouseSchemeIndex = asset.FindControlSchemeIndex("KeyboardAndMouse");
+                return asset.controlSchemes[m_KeyboardAndMouseSchemeIndex];
             }
         }
         public interface IPlayerActions
@@ -287,6 +315,7 @@ namespace Multiplayer.GameControls
             void OnMove(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnSimpleFire(InputAction.CallbackContext context);
+            void OnDebugButton(InputAction.CallbackContext context);
         }
     }
 }

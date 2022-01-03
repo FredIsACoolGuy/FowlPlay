@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "DebugButton",
+                    "type": "Button",
+                    "id": "ffbd344a-abc2-40d1-8ca3-f238b70babaa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -45,7 +53,7 @@
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -67,7 +75,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -78,7 +86,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -89,7 +97,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -100,7 +108,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -111,7 +119,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -122,8 +130,19 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboadAndMouse",
+                    "groups": "KeyboardAndMouse",
                     "action": "SimpleFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7e97a2b-4452-4b3a-ab58-816692630934",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "DebugButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -132,8 +151,8 @@
     ],
     "controlSchemes": [
         {
-            "name": "KeyboadAndMouse",
-            "bindingGroup": "KeyboadAndMouse",
+            "name": "KeyboardAndMouse",
+            "bindingGroup": "KeyboardAndMouse",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
