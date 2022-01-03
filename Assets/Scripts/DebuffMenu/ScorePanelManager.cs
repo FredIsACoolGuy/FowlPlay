@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScorePanelManager : MonoBehaviour
+public class ScorePanelManager : Panel
 {
-    // Start is called before the first frame update
-    void Start()
+    //happens when activated
+    private void Start()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void InitializePanel()
     {
-        
+
+    }
+
+    public override void ExitPanel()
+    {
+
     }
 }
