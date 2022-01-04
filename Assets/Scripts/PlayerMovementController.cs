@@ -92,6 +92,7 @@ namespace Multiplayer.GameControls
         [Client]
         private void SetMovement(Vector2 movement)
         {
+            Debug.Log("CONTROLLINGGG");
             prevInput = movement;
         }
 
