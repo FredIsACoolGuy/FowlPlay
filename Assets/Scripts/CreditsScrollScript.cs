@@ -27,7 +27,7 @@ public class CreditsScrollScript : MonoBehaviour
         foreach(RectTransform child in rTransform)
         {
             TMP_Text textMesh = child.GetComponent<TMP_Text>();
-            if (child.anchoredPosition.y>bottomPos && child.anchoredPosition.y < topPos)
+            if (rTransform.anchoredPosition.y + child.anchoredPosition.y>bottomPos && rTransform.anchoredPosition.y + child.anchoredPosition.y < topPos)
             {
                 textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, Mathf.Min(textMesh.color.a + (fadeSpeed * Time.deltaTime), 1f));
             }

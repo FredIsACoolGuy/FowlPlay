@@ -1464,6 +1464,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 812920368}
+        m_TargetAssemblyTypeName: CreditsScrollScript, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &600862009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,7 +1651,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000026703, y: -698}
+  m_AnchoredPosition: {x: 0.000026703, y: -692}
   m_SizeDelta: {x: 474.9296, y: 83.0934}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &689629523
@@ -2045,7 +2057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -587}
+  m_AnchoredPosition: {x: 0, y: -540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &812920368
@@ -2061,10 +2073,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: -620}
-  bottomPos: -450
-  topPos: 180
-  scrollSpeed: 1
-  fadeSpeed: 0.01
+  bottomPos: -500
+  topPos: 130
+  scrollSpeed: 60
+  fadeSpeed: 4
 --- !u!1 &827342809
 GameObject:
   m_ObjectHideFlags: 0
@@ -4667,7 +4679,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 0.8964952, b: 0.5424528, a: 1}
+  m_BackGroundColor: {r: 0.23113209, g: 0.7545724, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5884,7 +5896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39186543, g: 0.6981132, b: 0.6127391, a: 1}
+  m_Color: {r: 0.27940035, g: 0.2791474, b: 0.38679248, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
