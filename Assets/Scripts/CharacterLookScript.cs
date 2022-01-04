@@ -22,7 +22,8 @@ public class CharacterLookScript : NetworkBehaviour
 
     private GameObject currentBird;
 
-    private float lineWeightMultiplier = 1f; 
+    private int currentTypeNum = 100;
+    private int currentHatNum = 100;
 
     public override void OnStartAuthority()
     { 
@@ -30,12 +31,8 @@ public class CharacterLookScript : NetworkBehaviour
         {
             circle.enabled = true;
         }
-
-        if (this.GetComponent<NetworkGamePlayer>() == null)
-        {
-            lineWeightMultiplier = 16f;
-
-        }
+        changeHat(0);
+        
     }
 
     //called when the player starts
@@ -43,7 +40,7 @@ public class CharacterLookScript : NetworkBehaviour
 
     public void playerStart(int playerNum)
     {
-        Debug.Log("POOP");
+        Debug.Log("Only in game");
         //checks for Network Game Player, and then uses these stored numbers to update appearance
         if (this.GetComponent<NetworkGamePlayer>() != null)
         {
@@ -62,27 +59,34 @@ public class CharacterLookScript : NetworkBehaviour
             setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
             //callChangeAppearence(NetworkManagerOverride.typeNumbers[playerNum], NetworkManagerOverride.hatNumbers[playerNum], playerNum);
             //callChangeAppearence(0, 0, playerNum);
-            lineWeightMultiplier = 1f;
         }
 
     }
 
     [Client]
     //changes the material on the mesh renderer
-    public void changeType(int typeNum)
+    public void changeType(int typeNum) 
     {
-        if (currentBird != null)
+        if (currentTypeNum == typeNum)
         {
+            return;
+        }
+
+        if (currentBird != null) {
             Destroy(currentBird);
         }
-        
+
         currentBird = Instantiate(data.typeMeshes[typeNum], characterMeshHolder);
 
-        currentBird.transform.GetComponentInChildren<OutlineColor>().lineWeightMultiplier = lineWeightMultiplier;
+        OutlineColor hatAnchor = currentBird.transform.GetComponentInChildren<OutlineColor>();
+
+        if (GetComponent<NetworkGamePlayer>() == null) { 
+            hatAnchor.MultiplyLineWeight(16);
+        }
 
         if (currentHat != null)
         {
-            currentHat.transform.parent = currentBird.transform.GetComponentInChildren<OutlineColor>().transform;
+            currentHat.transform.SetParent(hatAnchor.transform);
             currentHat.transform.localPosition = Vector3.zero;
         }
 
@@ -90,11 +94,18 @@ public class CharacterLookScript : NetworkBehaviour
         {
             typeText.text = data.typeNames[typeNum];
         }
+
+        currentTypeNum = typeNum;
     }
     [Client]
     //enables and disables hats to change the hat the character is wearing
     public void changeHat(int hatNum)
     {
+        if (currentHatNum == hatNum)
+        {
+            return;
+        }
+        Debug.Log("IS RUNNIG" + hatNum);
 
         if (currentHat != null)
         {
@@ -103,14 +114,18 @@ public class CharacterLookScript : NetworkBehaviour
 
         if (currentBird != null)
         {
+            Debug.Log("BIRD IS OK");
             currentHat = Instantiate(data.hatMeshes[hatNum], currentBird.transform.GetComponentInChildren<OutlineColor>().transform);
             currentHat.transform.localPosition = Vector3.zero;
+            currentHatNum = hatNum;
         }
 
         if (hatText != null)
         {
             hatText.text = data.hatNames[hatNum];
         }
+
+        
     }
     [Client]
     public void changeColour(int colour)
