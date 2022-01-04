@@ -77,6 +77,7 @@
         {
             Tags { "LightMode" = "ForwardAdd" }
             Blend One One
+            ZWrite Off
 
             CGPROGRAM
             #pragma vertex vert

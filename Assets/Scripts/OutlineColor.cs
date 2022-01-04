@@ -7,21 +7,25 @@ public class OutlineColor : MonoBehaviour
     [HideInInspector] public Color outlineColor;
     [SerializeField] Renderer renderer;
     [SerializeField] bool isBird = false;
-    public float lineWeightMultiplier = 1;
+    private float lineWeightMultiplier = 1;
 
-    private void Start() {
+    private void Awake() {
         if (isBird) {
             outlineColor = renderer.material.GetColor("_OutlineColor");
-            if (lineWeightMultiplier != 1) {
-                Material[] mats = renderer.materials;
-                float lineWeight = mats[0].GetFloat("_OutlineThickness");
-                foreach (Material mat in mats) {
-                    mat.SetFloat("_OutlineThickness", lineWeight * lineWeightMultiplier);
-                }
-            }
         }
         else {
             StartCoroutine(SetColor());
+        }
+    }
+
+    public void MultiplyLineWeight(float lineWeightMultiplier) {
+        this.lineWeightMultiplier = lineWeightMultiplier;
+
+        Material[] mats = renderer.materials;
+        float lineWeight = mats[0].GetFloat("_OutlineThickness");
+
+        foreach (Material mat in mats) {
+            mat.SetFloat("_OutlineThickness", lineWeight * lineWeightMultiplier);
         }
     }
 
