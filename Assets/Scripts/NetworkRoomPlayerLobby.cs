@@ -340,7 +340,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
                         transform.position = new Vector3(32f, 42f, 0f);
                         break;
                     case 3:
-                        transform.position = new Vector3(96f, -42f, 0f);
+                        transform.position = new Vector3(96f, 42f, 0f);
                         break;
                     case 4:
                         transform.position = new Vector3(-66f, -42f, 0f);
@@ -451,6 +451,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
             }
         }
             Room.NotifyPlayersOfReadyState();
+        UpdateDisplay();
+
     }
 
     [ClientRpc]

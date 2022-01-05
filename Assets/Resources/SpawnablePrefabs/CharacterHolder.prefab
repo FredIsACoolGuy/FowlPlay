@@ -2158,7 +2158,7 @@ MonoBehaviour:
   nameText: {fileID: 951115384620824044}
   readyImage: {fileID: 7087550134312185442}
   readyText: {fileID: 7087550133679784268}
-  DisplayName: Loading...
+  DisplayName: Bird
   IsReady: 0
   typeNum: 0
   hatNum: 0

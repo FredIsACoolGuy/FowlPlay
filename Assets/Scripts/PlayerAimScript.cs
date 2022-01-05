@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 namespace Multiplayer.GameControls
@@ -15,7 +16,7 @@ namespace Multiplayer.GameControls
 
         private GameControls controls;
 
-        private Vector2 pointerOffset;
+        public Vector3 pointerOffset;
 
         private bool simpleFireHeld = false;
 
@@ -26,6 +27,19 @@ namespace Multiplayer.GameControls
         public float maxTimeHeld = 2f;
 
         public CameraShakeScript cameraShakeScript;
+
+        public float slowDown;
+
+
+        #region shittyNewCursourmaybe
+        public RectTransform cursor;
+        private Image cursorImage; 
+        public RectTransform canvas;
+        public float cursorOffset = 10f;
+        #endregion
+
+
+
 
         private PlayerMovementController movementController;
         private GameControls Controls
@@ -47,13 +61,16 @@ namespace Multiplayer.GameControls
             line.enabled = true;
             line.SetPosition(0, transform.position);
             line.SetPosition(1, transform.position);
-            cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+            cam = Camera.main;
             enabled = true;
-
+            cursorImage = cursor.GetComponent<Image>();
             Controls.Player.Look.performed += ctx => MoveTarget(ctx.ReadValue<Vector2>());
             Controls.Player.Fire.performed += ctx => Fire(ctx.ReadValue<float>());
             Controls.Player.SimpleFire.performed += ctx => SimpleFire(ctx.ReadValue<float>());
-            
+
+           // Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            //cursor.gameObject.SetActive(false);
         }
 
         [ClientCallback]
@@ -81,12 +98,15 @@ namespace Multiplayer.GameControls
             {
                 if (value > 0.5f)
                 {
+                    cursorImage.enabled = false;
                     fireHeld = true;
                     freshFire = true;
                     timeHeld = 0f;
                 }
                 else
                 {
+                    cursorImage.enabled = true;
+
                     fireHeld = false;
                 }
             }
@@ -99,22 +119,64 @@ namespace Multiplayer.GameControls
             {
                 if (value > 0.5f)
                 {
+                    cursorImage.enabled = false;
+
                     simpleFireHeld = true;
                     freshFire = true;
                     timeHeld = 0f;
                 }
                 else
                 {
+                    cursorImage.enabled = true;
+
                     simpleFireHeld = false;
                 }
             }
         }
 
+        private Vector2 storedMouse;
         private void MoveTarget(Vector2 mousePos)
         {
-            cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+            //GameObject.Find("Main Camera").GetComponent<Camera>();
 
-            pointerOffset = mousePos - new Vector2(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
+            // pointerOffset = mousePos - new Vector2(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
+            //if (!(simpleFireHeld || fireHeld))
+            //{
+                Ray ray = cam.ScreenPointToRay(mousePos);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(ray, out hit))
+                {
+                    pointerOffset = hit.point - transform.position;
+
+                    cursor.position = cam.WorldToScreenPoint(hit.point);
+                    storedMouse = mousePos;
+                }
+           // }
+           // else
+           // {
+           //     cursor.position = cursor.position + new Vector3(mousePos.x - storedMouse.x, mousePos.y - storedMouse.y, 0f);
+           //     storedMouse = mousePos;
+           // }
+            ///
+            ///cursor
+            ///
+            //if (!simpleFireHeld && !fireHeld)
+            //{
+            //    Vector3 newCursorPos = new Vector3();
+            //    RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas, mousePos, cam, out newCursorPos);
+            //    cursor.anchoredPosition = new Vector2(mousePos.x - Screen.width / 2, mousePos.y - Screen.height / 2) / 2.2f;
+                
+            ////    Ray ray = cam.ScreenPointToRay(cursor.position);
+            ////    RaycastHit hit = new RaycastHit();
+            ////    if (Physics.Raycast(ray, out hit))
+            ////    {
+            ////        pointerOffset = hit.point - transform.position;
+            ////    }
+            //}
+           // else
+           // {
+            //    cursor.anchoredPosition = cam.WorldToScreenPoint(transform.position + pointerOffset);
+            //}
         }
 
         [Client]
@@ -145,14 +207,16 @@ namespace Multiplayer.GameControls
             {
                 target.position = Vector3.Lerp(target.position, transform.position, Time.deltaTime);
             }
+
+
         }
 
-        private void Aim(Vector2 offset)
+        private void Aim(Vector3 offset)
         {
             //count time held
             timeHeld += Time.deltaTime;
             //find distance to draw line based on anlge and time held
-            target.transform.position = transform.position + new Vector3(offset.x, 0f, offset.y).normalized * Mathf.Clamp(timeHeld * lineSpeed, 0f, maxLineLength);
+            target.transform.position = transform.position + new Vector3(offset.x, 0f, offset.z).normalized * Mathf.Clamp(timeHeld * lineSpeed, 0f, maxLineLength);
 
             //position line
             line.SetPosition(0, transform.position);
@@ -163,7 +227,7 @@ namespace Multiplayer.GameControls
             line.endColor = new Color(1f, 1f / timeHeld, 1f / timeHeld, 0.6f);
 
             //slow down player
-            movementController.movementSpeed = movementController.normalMovementSpeed / (2f + Mathf.Clamp(timeHeld, 0f, 2.5f));
+            movementController.movementSpeed = movementController.normalMovementSpeed / (slowDown*(2f + Mathf.Clamp(timeHeld, 0f, maxTimeHeld)));
 
             //stop rotation if the player is aiming with mouse? maybe remove this if
             if (fireHeld)
