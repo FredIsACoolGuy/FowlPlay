@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479495, g: 0.49434227, b: 0.5735397, a: 1}
+  m_IndirectSpecularColor: {r: 0.44479474, g: 0.49434173, b: 0.57353836, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6953,7 +6953,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Golden Goose
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 544645565030117328, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
 --- !u!1001 &1585601952
 PrefabInstance:
