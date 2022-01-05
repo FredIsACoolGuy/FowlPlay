@@ -294,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 582be11fd22c7484baeb7f5a662b86c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHolder: {fileID: 875605568779773433, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
 --- !u!1 &736015165
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _test: 0
   _subject: {fileID: 1176862932}
+  _network: {fileID: 1796948322}
+  _testNum: 3
 --- !u!1 &1103180022
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,9 +448,8 @@ GameObject:
   - component: {fileID: 1176862934}
   - component: {fileID: 1176862933}
   - component: {fileID: 1176862937}
-  - component: {fileID: 1176862938}
   m_Layer: 5
-  m_Name: Canvas (PanelManager)
+  m_Name: PanelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -547,25 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107ee74dfad4f554495912e0338e974f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &1176862938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176862932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 989753459
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1699667338
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,6 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090651f22ef46d7448d22a79371652d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHolder: {fileID: 875605568779773433, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
 --- !u!1 &1796948319
 GameObject:
   m_ObjectHideFlags: 0

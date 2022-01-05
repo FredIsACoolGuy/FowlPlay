@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PanelManager : NetworkBehaviour
+public class PanelManager : MonoBehaviour
 {
     #region Variables
 
+    //Panel related variables
     private Panel[] _panels;
     private int _currentPanel = -1;
+
+    //Player related variables
+    private int _numOfPlayers; //might not need
 
     #endregion
 

@@ -16,4 +16,10 @@ public class DebuffPanelManager : Panel
     public override void ExitPanel()
     {
     }
+
+    protected override void InstantiatePlayerHolders()
+    {
+        base.InstantiatePlayerHolders();
+
+    }
 }
