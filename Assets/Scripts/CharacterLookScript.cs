@@ -88,6 +88,8 @@ public class CharacterLookScript : NetworkBehaviour
         {
             currentHat.transform.SetParent(hatAnchor.transform);
             currentHat.transform.localPosition = Vector3.zero;
+            StartCoroutine(currentHat.GetComponent<OutlineColor>().SetColorNoScale());
+            currentHat.transform.localRotation = data.hatMeshes[currentHatNum].transform.rotation;
         }
 
         if (typeText != null)

@@ -62,7 +62,7 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthColorCutoff: 0.35
+    - _DepthColorCutoff: 2.48
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FoamDepthCutoff: 2
@@ -88,7 +88,7 @@ Material:
     - _ColShiftScrollSpeed: {r: 0.02, g: -0.03, b: 0, a: 0}
     - _ColShiftTint: {r: 0.20971872, g: 0.5409082, b: 0.8113208, a: 0.14901961}
     - _Color: {r: 0.57315767, g: 0.882776, b: 0.9433962, a: 1}
-    - _DepthColor: {r: 0.28235298, g: 0.5007901, b: 0.7647059, a: 1}
+    - _DepthColor: {r: 0.4919455, g: 0.6320754, b: 0.55963105, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.95660377, g: 1, b: 0.9972256, a: 1}
     - _FoamScrollSpeed: {r: 0.04, g: -0.05, b: 0, a: 0}

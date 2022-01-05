@@ -177,6 +177,81 @@ Transform:
   m_Father: {fileID: 21617518185766598}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &354041802695245164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644291976119735915}
+  - component: {fileID: 7889793440016113418}
+  - component: {fileID: 8395359776393943241}
+  m_Layer: 5
+  m_Name: Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1644291976119735915
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354041802695245164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6060745284281431897}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7889793440016113418
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354041802695245164}
+  m_CullTransparentMesh: 1
+--- !u!114 &8395359776393943241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354041802695245164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 4897931696528758027, guid: cc6248ee35f8f6f49a88ed1e512f1056, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &498877246676149553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1700,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3301674118368335213}
   m_LocalRotation: {x: -0.7071066, y: -0, z: -0, w: 0.70710695}
-  m_LocalPosition: {x: 0, y: -0.8, z: -0}
+  m_LocalPosition: {x: 0, y: -0.93, z: -0}
   m_LocalScale: {x: 0.39841062, y: 0.39841062, z: 0.39841062}
   m_Children: []
   m_Father: {fileID: 21617518185766598}
@@ -2918,7 +2993,7 @@ Transform:
   m_GameObject: {fileID: 4383147816970117007}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.9, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 3376119800541708580}
   m_Father: {fileID: 21617518185766598}
@@ -3225,6 +3300,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 3783273311249839195}
+  - {fileID: 1644291976119735915}
   m_Father: {fileID: 21617518185766598}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5125,8 +5201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  normalMovementSpeed: 6
-  movementSpeed: 6
+  normalMovementSpeed: 8
+  movementSpeed: 8
   turnSpeed: 8
   controller: {fileID: 2594534181296326141}
   aimingVec: {x: 0, y: 0, z: 0}
@@ -5139,13 +5215,14 @@ MonoBehaviour:
   targetPitCentre: {fileID: 0}
   fallSpeed: 12
   attacking: 0
-  attackSpeed: 12
-  attackTimeMultiplier: 0.2
-  overlapRadius: 0.75
-  overlapOffset: 0.75
+  attackSpeed: 34
+  attackTimeMultiplier: 0.3
+  overlapRadius: 1.02
+  overlapOffset: 1.14
+  minAttackDistance: 1
   knocked: 0
   knockPowerMultiplier: 10
-  knockTimeMultiplier: 2
+  knockTimeMultiplier: 0.8
 --- !u!143 &2594534181296326141
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5158,7 +5235,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.85
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.08
@@ -5179,10 +5256,15 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   target: {fileID: 8329394492751204481}
-  lineSpeed: 4
+  pointerOffset: {x: 0, y: 0, z: 0}
+  lineSpeed: 6
   maxLineLength: 5.1
-  maxTimeHeld: 2
+  maxTimeHeld: 1
   cameraShakeScript: {fileID: 5380583736752752129}
+  slowDown: 0.8
+  cursor: {fileID: 1644291976119735915}
+  canvas: {fileID: 6060745284281431897}
+  cursorOffset: 10
 --- !u!120 &3996463588608416419
 LineRenderer:
   m_ObjectHideFlags: 0

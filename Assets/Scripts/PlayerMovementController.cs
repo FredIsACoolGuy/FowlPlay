@@ -55,8 +55,6 @@ namespace Multiplayer.GameControls
             Controls.Disable();
         }
 
-        [ClientCallback]
-
         private void Update()
         {
             if (falling)
@@ -88,6 +86,8 @@ namespace Multiplayer.GameControls
 
             }
         }
+
+        
 
         [Client]
         private void SetMovement(Vector2 movement)
@@ -169,16 +169,17 @@ namespace Multiplayer.GameControls
 
         [Header("ATTACKING")]
 
-        private Vector3 attackDir;
         public bool attacking;
         public float attackSpeed = 10f;
         public float attackTimeMultiplier;
         public float overlapRadius;
         public float overlapOffset;
+        private Vector3 attackDir;
 
+        public float minAttackDistance=1f;
         public void Attack(float attackAmount)
         {
-           attackDir = facingDir * attackSpeed * attackAmount;
+           attackDir = (facingDir * attackSpeed * attackAmount) +(facingDir * minAttackDistance);
            StartCoroutine(doAttack(attackAmount * attackTimeMultiplier));
         }
 
@@ -216,7 +217,7 @@ namespace Multiplayer.GameControls
         {
             Debug.Log("KNOCKED");
             knockDir = transform.position - hitFrom;
-            knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
+            knockDir = new Vector3(knockDir.x, 1f, knockDir.z).normalized * power;
             
             StartCoroutine(doKnockback(knockTimeMultiplier));
         }

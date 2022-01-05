@@ -29,7 +29,7 @@ public class OutlineColor : MonoBehaviour
         }
     }
 
-    IEnumerator SetColor() {
+    private IEnumerator SetColor() {
         yield return new WaitForEndOfFrame();
 
         OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
@@ -44,6 +44,23 @@ public class OutlineColor : MonoBehaviour
         foreach (Material mat in mats) {
             mat.SetColor("_OutlineColor", col);
             mat.SetFloat("_OutlineThickness", lineWeight * parentMultiplier);
+        }
+    }
+
+    public IEnumerator SetColorNoScale()
+    {
+        yield return new WaitForEndOfFrame();
+
+        OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
+        Color col = parentScript.outlineColor;
+
+        if (renderer == null)
+            renderer = GetComponent<Renderer>();
+        Material[] mats = renderer.materials;
+
+        foreach (Material mat in mats)
+        {
+            mat.SetColor("_OutlineColor", col);
         }
     }
 }
