@@ -31,19 +31,22 @@ public class OutlineColor : MonoBehaviour
 
     private IEnumerator SetColor() {
         yield return new WaitForEndOfFrame();
+        if (transform.parent != null)
+        {
+            OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
+            Color col = parentScript.outlineColor;
+            float parentMultiplier = parentScript.lineWeightMultiplier;
 
-        OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
-        Color col = parentScript.outlineColor;
-        float parentMultiplier = parentScript.lineWeightMultiplier;
+            if (renderer == null)
+                renderer = GetComponent<Renderer>();
+            Material[] mats = renderer.materials;
 
-        if (renderer == null)
-            renderer = GetComponent<Renderer>();
-        Material[] mats = renderer.materials;
-
-        float lineWeight = mats[0].GetFloat("_OutlineThickness");
-        foreach (Material mat in mats) {
-            mat.SetColor("_OutlineColor", col);
-            mat.SetFloat("_OutlineThickness", lineWeight * parentMultiplier);
+            float lineWeight = mats[0].GetFloat("_OutlineThickness");
+            foreach (Material mat in mats)
+            {
+                mat.SetColor("_OutlineColor", col);
+                mat.SetFloat("_OutlineThickness", lineWeight * parentMultiplier);
+            }
         }
     }
 
