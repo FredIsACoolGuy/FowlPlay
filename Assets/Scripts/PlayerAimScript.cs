@@ -16,9 +16,9 @@ namespace Multiplayer.GameControls
 
         public Vector3 pointerOffset;
 
-        private bool simpleFireHeld = false;
+        public bool simpleFireHeld = false;
 
-        private bool fireHeld=false;
+        public bool fireHeld=false;
         private bool freshFire = false;
         
         public float maxTimeHeld = 2f;
@@ -89,7 +89,7 @@ namespace Multiplayer.GameControls
         {
             Controls.Disable();
         }
-        float timeHeld;
+        public float timeHeld;
         private void Fire(float value)
         {
             if (!simpleFireHeld)
