@@ -50,6 +50,7 @@ Shader "FowlPlay/VFX/Smoke Cloud"
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
+                half4 color : COLOR;
                 float4 texCoord0 : TEXCOORD0;
                 float2 texCoord1 : TEXCOORD1;
             };
@@ -57,6 +58,7 @@ Shader "FowlPlay/VFX/Smoke Cloud"
             struct v2f
             {
                 float4 pos : SV_POSITION;
+                half4 color : COLOR;
                 SHADOW_COORDS(0)
             };
 
@@ -70,12 +72,13 @@ Shader "FowlPlay/VFX/Smoke Cloud"
                 float4 vertex = GetVertex(v.vertex, v.normal, v.texCoord0, v.texCoord1);
                 o.pos = UnityObjectToClipPos(vertex);
                 TRANSFER_SHADOW(o);
+                o.color = v.color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = _Color;
+                fixed4 col = _Color * i.color;
                 float shadow = SHADOW_ATTENUATION(i);
                 col *= shadow < _ShadowFactor ? 1-_ShadowStrength : 1;
 

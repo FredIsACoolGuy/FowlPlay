@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pit
   - AttackZone
+  - Pickup
   layers:
   - Default
   - TransparentFX

@@ -11,13 +11,15 @@ public class NetworkGamePlayer : NetworkBehaviour
     //can only be updated on the server
     //when variables change these functions are called
     [SyncVar]
-    public string DisplayName = "Loading...";
+    public string DisplayName = "Bird";
     [SyncVar]
     public int typeNum = 0;
     [SyncVar]
     public int hatNum = 0;
     [SyncVar]
     public int playerNum=0;
+    [SyncVar]
+    public int pickUpsCurrentlyHeld = 0;
     #endregion
     private CharacterLookScript charLookScript;
 

@@ -51,7 +51,7 @@ public class FunkyFreshMovementMenu : MonoBehaviour
         speedSlider.value = movementController.normalMovementSpeed;
         accSlider.value = movementController.accelerationSpeed;
         decSlider.value = movementController.decelerationSpeed;
-        lineSpeedSlider.value = aimScript.lineSpeed;
+        lineSpeedSlider.value = aimScript.camMoveSpeed;
         maxLineTimeSlider.value = aimScript.maxTimeHeld;
         attackSpeedSlider.value = movementController.attackSpeed;
         attackTimeSlider.value = movementController.attackTimeMultiplier;
@@ -65,7 +65,7 @@ public class FunkyFreshMovementMenu : MonoBehaviour
         movementController.movementSpeed = speedSlider.value;
         movementController.accelerationSpeed = accSlider.value;
         movementController.decelerationSpeed = decSlider.value;
-        aimScript.lineSpeed = lineSpeedSlider.value;
+        aimScript.camMoveSpeed = lineSpeedSlider.value;
         aimScript.maxTimeHeld = maxLineTimeSlider.value;
         movementController.attackSpeed = attackSpeedSlider.value;
         movementController.attackTimeMultiplier = attackTimeSlider.value;

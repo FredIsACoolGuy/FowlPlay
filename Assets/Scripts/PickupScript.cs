@@ -17,9 +17,9 @@ public class PickupScript : NetworkBehaviour
         transform.position = transform.position + offset;
     }
 
-    [Server]
-    private void OnTriggerEnter(Collider other)
-    {
-        Destroy(this.gameObject);
-    }
+    //[Server]
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Destroy(this.gameObject);
+    //}
 }

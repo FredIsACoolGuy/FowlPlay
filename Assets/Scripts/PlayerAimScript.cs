@@ -8,8 +8,6 @@ namespace Multiplayer.GameControls
 {
     public class PlayerAimScript : NetworkBehaviour
     {
-        private LineRenderer line;
-
         public Transform target;
 
         private Camera cam;
@@ -22,23 +20,26 @@ namespace Multiplayer.GameControls
 
         private bool fireHeld=false;
         private bool freshFire = false;
-        public float lineSpeed;
-        public float maxLineLength = 5f;
+        
         public float maxTimeHeld = 2f;
+
+        public float aimingCameraOffset;
+        public float camMoveSpeed;
 
         public CameraShakeScript cameraShakeScript;
 
         public float slowDown;
 
 
-        #region shittyNewCursourmaybe
+        #region shittyNewCursourMaybe
         public RectTransform cursor;
-        private Image cursorImage; 
-        public RectTransform canvas;
-        public float cursorOffset = 10f;
+        private Image cursorImage;
+
+
+        public Transform arrowTransform;
+        public SpriteRenderer arrow;
+        public float arrowTurnSpeed = 5f;
         #endregion
-
-
 
 
         private PlayerMovementController movementController;
@@ -57,10 +58,7 @@ namespace Multiplayer.GameControls
         public override void OnStartAuthority()
         {
             movementController = GetComponent<PlayerMovementController>();
-            line = GetComponent<LineRenderer>();
-            line.enabled = true;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, transform.position);
+            
             cam = Camera.main;
             enabled = true;
             cursorImage = cursor.GetComponent<Image>();
@@ -98,7 +96,10 @@ namespace Multiplayer.GameControls
             {
                 if (value > 0.5f)
                 {
+                    Cursor.visible = false;
+
                     cursorImage.enabled = false;
+                    arrow.enabled = true;
                     fireHeld = true;
                     freshFire = true;
                     timeHeld = 0f;
@@ -106,7 +107,7 @@ namespace Multiplayer.GameControls
                 else
                 {
                     cursorImage.enabled = true;
-
+                    arrow.enabled = false;
                     fireHeld = false;
                 }
             }
@@ -120,7 +121,7 @@ namespace Multiplayer.GameControls
                 if (value > 0.5f)
                 {
                     cursorImage.enabled = false;
-
+                    arrow.enabled = true;
                     simpleFireHeld = true;
                     freshFire = true;
                     timeHeld = 0f;
@@ -128,7 +129,7 @@ namespace Multiplayer.GameControls
                 else
                 {
                     cursorImage.enabled = true;
-
+                    arrow.enabled = false;
                     simpleFireHeld = false;
                 }
             }
@@ -184,7 +185,7 @@ namespace Multiplayer.GameControls
         {
             if (simpleFireHeld)
             {
-                Aim(new Vector2(movementController.facingDir.x, movementController.facingDir.z));
+                Aim(movementController.facingDir);
             }
             else if (fireHeld)
             {
@@ -194,8 +195,6 @@ namespace Multiplayer.GameControls
             {
                 freshFire = false;
                 movementController.aimingVec = Vector3.zero;
-                line.SetPosition(0, transform.position);
-                line.SetPosition(1, transform.position);
                 movementController.movementSpeed = movementController.normalMovementSpeed;
                 //do attack
                 movementController.Attack(Mathf.Clamp(timeHeld, 0f, maxTimeHeld));
@@ -211,23 +210,31 @@ namespace Multiplayer.GameControls
 
         }
 
+        public float arrowBounceTime;
+        public float arrowBouncePower;
         private void Aim(Vector3 offset)
         {
             //count time held
             timeHeld += Time.deltaTime;
+            timeHeld = Mathf.Clamp(timeHeld, 0f, maxTimeHeld);
             //find distance to draw line based on anlge and time held
-            target.transform.position = transform.position + new Vector3(offset.x, 0f, offset.z).normalized * Mathf.Clamp(timeHeld * lineSpeed, 0f, maxLineLength);
-
-            //position line
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, target.transform.position);
-
-            //change colour of line
-            line.startColor = new Color(1f, 1f / (timeHeld * 2f), 1f / (timeHeld * 2f), 1f);
-            line.endColor = new Color(1f, 1f / timeHeld, 1f / timeHeld, 0.6f);
+            //target.transform.position = transform.position + new Vector3(offset.x, 0f, offset.z).normalized * Mathf.Clamp(timeHeld * camMoveSpeed, 0f, aimingCameraOffset);
+            target.transform.position = Vector3.Lerp(target.transform.position, transform.position + new Vector3(offset.x, 0f, offset.z).normalized * aimingCameraOffset, Time.deltaTime* camMoveSpeed);
 
             //slow down player
             movementController.movementSpeed = movementController.normalMovementSpeed / (slowDown*(2f + Mathf.Clamp(timeHeld, 0f, maxTimeHeld)));
+
+            arrowTransform.eulerAngles = new Vector3(0f, Mathf.LerpAngle(arrowTransform.eulerAngles.y, Vector3.SignedAngle(Vector3.right, offset, Vector3.up), Time.deltaTime * arrowTurnSpeed), 0f);
+
+            if (timeHeld == maxTimeHeld)
+            {
+                float scaleNum = Mathf.Max(Mathf.Sin(Time.frameCount / arrowBounceTime) * arrowBouncePower, 0f);
+                arrow.transform.localScale = Vector3.one + new Vector3(scaleNum, scaleNum, scaleNum);
+            }
+            else
+            {
+                arrow.transform.localScale = (Vector3.one * 0.35f) + (Vector3.one * 0.65f * (timeHeld / maxTimeHeld));
+            }
 
             //stop rotation if the player is aiming with mouse? maybe remove this if
             if (fireHeld)

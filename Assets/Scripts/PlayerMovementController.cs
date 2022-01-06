@@ -23,6 +23,7 @@ namespace Multiplayer.GameControls
 
         public SphereCollider attackCollider;
 
+        private NetworkGamePlayer gamePlayer;
         private int playerNum;
         private GameControls Controls
         {
@@ -40,7 +41,8 @@ namespace Multiplayer.GameControls
             Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
             Controls.Player.Move.canceled += ctx => ResetMovement();
 
-            playerNum = GetComponent<NetworkGamePlayer>().playerNum;
+            gamePlayer = GetComponent<NetworkGamePlayer>();
+            playerNum = gamePlayer.playerNum;
         }
 
 
@@ -84,6 +86,14 @@ namespace Multiplayer.GameControls
                 targetPitCentre = other.transform;
                 falling = true;
 
+            }
+            else if (other.CompareTag("Pickup"))
+            {
+                Debug.Log("Picked");
+                //targetPitCentre = other.transform;
+                //falling = true;
+                gamePlayer.pickUpsCurrentlyHeld++;
+                Destroy(other.gameObject);
             }
         }
 
@@ -217,7 +227,7 @@ namespace Multiplayer.GameControls
         {
             Debug.Log("KNOCKED");
             knockDir = transform.position - hitFrom;
-            knockDir = new Vector3(knockDir.x, 1f, knockDir.z).normalized * power;
+            knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
             StartCoroutine(doKnockback(knockTimeMultiplier));
         }

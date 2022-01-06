@@ -19,6 +19,9 @@ public class CharacterLookScript : NetworkBehaviour
     public Image card;
 
     public SpriteRenderer circle;
+    public SpriteRenderer arrow;
+
+    public TMP_Text nameText;
 
     private GameObject currentBird;
 
@@ -52,11 +55,14 @@ public class CharacterLookScript : NetworkBehaviour
             this.GetComponent<NetworkGamePlayer>().playerNum = playerNum;
             this.GetComponent<NetworkGamePlayer>().typeNum = pdh.typeNumbers[playerNum];
             this.GetComponent<NetworkGamePlayer>().hatNum = pdh.hatNumbers[playerNum];
-           
+            this.GetComponent<NetworkGamePlayer>().DisplayName = pdh.playerNames[playerNum];
+
             //Actual appearance changing
             changeType(this.GetComponent<NetworkGamePlayer>().typeNum);
             changeHat(this.GetComponent<NetworkGamePlayer>().hatNum);
             setCircleColour(this.GetComponent<NetworkGamePlayer>().playerNum);
+            nameText.text = this.GetComponent<NetworkGamePlayer>().DisplayName;
+
             //callChangeAppearence(NetworkManagerOverride.typeNumbers[playerNum], NetworkManagerOverride.hatNumbers[playerNum], playerNum);
             //callChangeAppearence(0, 0, playerNum);
         }
@@ -138,6 +144,10 @@ public class CharacterLookScript : NetworkBehaviour
     public void setCircleColour(int colour)
     {
         circle.color = data.playerColours[colour];
+        if (arrow != null)
+        {
+            arrow.color = data.playerColours[colour];
+        }
     }
 
     [ClientRpc]
