@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScorePanelManager : Panel
 {
+    private const float _offset = 55f;
+
     public override void InitializePanel()
     {
         InstantiatePlayerHolders();
@@ -19,18 +21,18 @@ public class ScorePanelManager : Panel
     protected override void InstantiatePlayerHolders()
     {
         base.InstantiatePlayerHolders();
-        LineUp();
+        LineUp(_offset);
     }
 
     //Lines up the players
-    private void LineUp()
+    private void LineUp(float offset)
     {
-        var tempX = Screen.width / GetNumOfPlayers() + 1;
-        var tempY = Screen.height / 3;
+        var tempX = (Screen.width - (2 * offset)) / (GetNumOfPlayers());
+        var tempY = Screen.height / 5;
 
         for (int i = 1; i < GetNumOfPlayers() + 1; i++)
         {
-            _playerHolders[i-1].transform.position = new Vector2 (tempX * i - (tempX/2), tempY);
+            _playerHolders[i-1].transform.position = new Vector2 (tempX * i - (tempX/2) + offset, tempY);
         }
     }
 
