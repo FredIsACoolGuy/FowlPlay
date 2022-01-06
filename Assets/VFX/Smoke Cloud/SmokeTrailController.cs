@@ -8,10 +8,11 @@ namespace Multiplayer.GameControls
     public class SmokeTrailController : MonoBehaviour
     {
         [SerializeField] PlayerMovementController playerController;
-        private ParticleSystem[] children = new ParticleSystem[3];
+        private ParticleSystem[] children;
         private int activeChild = 2;
 
         private void Awake() {
+            children = new ParticleSystem[transform.childCount];
             for (int i=0; i<children.Length; i++) {
                 children[i] = transform.GetChild(i).GetComponent<ParticleSystem>();
             }
@@ -29,6 +30,7 @@ namespace Multiplayer.GameControls
                 if (activeChild != 1) {
                     children[activeChild].Stop();
                     children[2].Play();
+                    children[3].Play();
                     activeChild = 2;
                 }
             }
