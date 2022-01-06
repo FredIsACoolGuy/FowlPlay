@@ -30,7 +30,8 @@ Shader "FowlPlay/Splsh"
         LOD 100
 
         CGINCLUDE
-
+            
+            float _StartTime;
             float2 _Duration;
             float2 _MaxHeight;
             float4 _WaveRadii;
@@ -44,7 +45,7 @@ Shader "FowlPlay/Splsh"
                 float maxHeight = uv.x < 0.5 ? _MaxHeight.x : _MaxHeight.y;
                 float minRad = uv.x < 0.5 ? _WaveRadii.x : _WaveRadii.z;
                 float maxRad = uv.x < 0.5 ? _WaveRadii.y : _WaveRadii.w;
-                float time = _Time[1] % (1 + (_Duration.x > _Duration.y ? _Duration.x : _Duration.y));
+                float time = (_Time[1] - _StartTime);
 
                 //dist
                 float dist = uv.y * uv.y * (maxRad - minRad) + minRad;
@@ -124,7 +125,7 @@ Shader "FowlPlay/Splsh"
                 foam -= i.uv.y * _Foaminess;
                 half3 tempCol = foam < _FoamTexCutoff ? _FoamColor.rgb : col.rgb;
 
-                float time = _Time[1] % (1 + (_Duration.x > _Duration.y ? _Duration.x : _Duration.y));
+                float time = _Time[1] - _StartTime;
                 float duration = i.uv.x < 0.5 ? _Duration.x : _Duration.y;
                 float timeFactor = saturate((duration - time) / (duration * 0.5));
                 col.rgb = lerp(col.rgb, tempCol, _FoamColor.a * timeFactor);
