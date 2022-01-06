@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class ScorePanelManager : Panel
 {
-    //happens when activated
-    private void Start()
-    {
-    }
-
     public override void InitializePanel()
     {
-
+        InstantiatePlayerHolders();
+        ErrorHandling.CheckActive(gameObject);
     }
 
     public override void ExitPanel()
     {
 
+    }
+
+    //Instantiates all players
+    protected override void InstantiatePlayerHolders()
+    {
+        base.InstantiatePlayerHolders();
+        LineUp();
+    }
+
+    //Lines up the players
+    private void LineUp()
+    {
+        var temp = Camera.main.WorldToScreenPoint(Vector2.zero);
+        _playerHolders[0].transform.position = temp;
     }
 }

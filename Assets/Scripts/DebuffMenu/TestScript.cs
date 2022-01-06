@@ -6,7 +6,17 @@ public class TestScript : MonoBehaviour
 {
     public bool _test = false;
     public GameObject _subject;
+    public NetworkManagerOverride _network;
 
+    public int _testNum = 3;
+
+    private void Awake()
+    {
+        for (int i = 0; i < _testNum; i++)
+        {
+            _network.GamePlayers.Add(new NetworkGamePlayer());
+        }
+    }
     private void Update()
     {
         if (_test)
