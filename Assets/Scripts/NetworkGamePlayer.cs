@@ -20,6 +20,8 @@ public class NetworkGamePlayer : NetworkBehaviour
     public int playerNum=0;
     [SyncVar]
     public int pickUpsCurrentlyHeld = 0;
+    [SyncVar]
+    public int currentState = 0;
     #endregion
     private CharacterLookScript charLookScript;
 
@@ -127,6 +129,13 @@ public class NetworkGamePlayer : NetworkBehaviour
     public void SetPlayerNum(int num)
     {
         this.playerNum = num;
+    }
+
+
+    [Server] //updates hat num
+    public void SetPlayerState(int num)
+    {
+        this.currentState = num;
     }
     #endregion
 }

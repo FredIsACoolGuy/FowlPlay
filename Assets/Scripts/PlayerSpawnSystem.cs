@@ -55,15 +55,17 @@ public class PlayerSpawnSystem : NetworkBehaviour
     {
         NetworkManagerOverride.OnServerReadied -= SpawnPlayer;
     }
-
+    PlayerDataHolder pdh;
     //only runs on server
     [Server]
     public void SpawnPlayer(NetworkConnection conn) 
     {
         Debug.Log("BUTTS");
+        pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
+        nextIndex = conn.connectionId;
         Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
         //Transform spawnPoint = spawnPoints[nextIndex];
-
+        //conn.connectionId
         //if there isnt a spawnpoint then return an error
         if (spawnPoint == null)
         {
@@ -74,7 +76,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
        GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, Quaternion.identity);
 
        StartCoroutine(delay(playerInstance, nextIndex, conn));
-       nextIndex++;
+       //nextIndex++;
     }
 
 
@@ -92,7 +94,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
     {
         //sets player position
         Debug.Log("Its happening");
-        PlayerDataHolder pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
+        pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
         ngp.SetDisplayName(pdh.playerNames[num]);
         ngp.SetTypeNum(pdh.typeNumbers[num]);
         ngp.SetHatNum(pdh.hatNumbers[num]);

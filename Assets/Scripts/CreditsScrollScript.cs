@@ -18,6 +18,12 @@ public class CreditsScrollScript : MonoBehaviour
     {
         rTransform = GetComponent<RectTransform>();
         rTransform.anchoredPosition = startPos;
+
+        foreach (RectTransform child in rTransform)
+        {
+            TMP_Text textMesh = child.GetComponent<TMP_Text>();
+            textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0f);
+        }
     }
 
     // Update is called once per frame

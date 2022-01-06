@@ -4,6 +4,8 @@ using UnityEngine;
 using Multiplayer.GameControls;
 using Mirror;
 using UnityEngine.UI;
+
+using UnityEngine.SceneManagement;
 public class FunkyFreshMovementMenu : MonoBehaviour
 {
     public GameObject holder;
@@ -88,6 +90,7 @@ public class FunkyFreshMovementMenu : MonoBehaviour
 
     private void ShowCanvas(float num)
     {
+        SceneManager.LoadScene(4);
         if (holder.activeSelf)
         {
             SetValues();
