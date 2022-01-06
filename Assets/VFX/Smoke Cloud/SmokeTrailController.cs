@@ -8,6 +8,7 @@ namespace Multiplayer.GameControls
     public class SmokeTrailController : MonoBehaviour
     {
         [SerializeField] PlayerMovementController playerController;
+        [SerializeField] PlayerAimScript aimScript;
         private ParticleSystem[] children;
         private int activeChild = 2;
 
@@ -34,10 +35,15 @@ namespace Multiplayer.GameControls
                     activeChild = 2;
                 }
             }
-            else if (!playerController.falling && activeChild != 0) {
-                children[activeChild].Stop();
-                children[0].Play();
-                activeChild = 0;
+            else if (!playerController.falling) {
+                if (activeChild != 0) {
+                    children[activeChild].Stop();
+                    children[0].Play();
+                    activeChild = 0;
+                }
+                if (aimScript.fireHeld || aimScript.simpleFireHeld) {
+                    children[0].Stop();
+                }
             }
         }
     }
