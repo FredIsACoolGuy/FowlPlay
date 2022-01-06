@@ -43,9 +43,11 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [SyncVar(hook = nameof(HandleHatStatusChanged))]
     public int hatNum = 0;
 
+    //[SyncVar]
+    //public var conn;
     #endregion
 
-    
+
     //bool to store if this client is also the host
     public bool isLeader = false;
     public bool IsLeader
@@ -191,6 +193,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         //sets all characters to blank - this resets all the characters so they are ready to update
         charLookScript.changeHat(hatNum);
         charLookScript.changeType(typeNum);
+        readyImage.SetActive(IsReady);
 
         bool canStartGame = true;
         int p = 0;
@@ -450,9 +453,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
                 roomPlayer.callUpdate();
             }
         }
-            Room.NotifyPlayersOfReadyState();
+        Room.NotifyPlayersOfReadyState();
         UpdateDisplay();
-
     }
 
     [ClientRpc]

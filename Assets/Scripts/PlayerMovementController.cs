@@ -24,6 +24,7 @@ namespace Multiplayer.GameControls
         public SphereCollider attackCollider;
 
         private NetworkGamePlayer gamePlayer;
+
         private int playerNum;
         private GameControls Controls
         {
@@ -37,7 +38,6 @@ namespace Multiplayer.GameControls
         public override void OnStartAuthority()
         {
             enabled = true;
-
             Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
             Controls.Player.Move.canceled += ctx => ResetMovement();
 
@@ -57,24 +57,34 @@ namespace Multiplayer.GameControls
             Controls.Disable();
         }
 
+        int currentState;
         private void Update()
         {
             if (falling)
             {
                 Fall();
+                currentState = 4;
             }
             else if (knocked)
             {
                 controller.Move(knockDir * knockPowerMultiplier* Time.deltaTime);
+                currentState = 2;
             }
             else if (attacking)
             {
                 CheckAttackZone(this.transform, facingDir);
                 controller.Move(attackDir * Time.deltaTime);
+                currentState = 1;
             }
             else
             {
                 Move();
+                currentState = 0;
+            }
+
+            if (gamePlayer.currentState != currentState)
+            {
+                gamePlayer.SetPlayerState(currentState);
             }
         }
 
@@ -173,7 +183,8 @@ namespace Multiplayer.GameControls
         public float fallSpeed;
         public void Fall()
         {
-            controller.detectCollisions =false;
+            //controller.detectCollisions = false;
+            //this.gameObject.layer = 10;
             controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
         }
 

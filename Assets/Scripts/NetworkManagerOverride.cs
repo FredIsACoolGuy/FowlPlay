@@ -34,8 +34,7 @@ public class NetworkManagerOverride : NetworkManager
 
 
     //in lobby list
-    public List<NetworkRoomPlayerLobby> RoomPlayers { get; set; } = new List<NetworkRoomPlayerLobby>();
-    
+    public List<NetworkRoomPlayerLobby> RoomPlayers { get; set; } = new List<NetworkRoomPlayerLobby>();   
     //in game list
     public List<NetworkGamePlayer> GamePlayers { get; set;} = new List<NetworkGamePlayer>();
 
@@ -109,6 +108,8 @@ public class NetworkManagerOverride : NetworkManager
             roomPlayerInstance.IsLeader = isLeader;
             //connects spawned prefab to this specific connection
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
+            Debug.Log("CONN ID:" + conn.connectionId);
+           // roomPlayerInstance.conn = conn;
         }
     }
 
@@ -192,7 +193,7 @@ public class NetworkManagerOverride : NetworkManager
         {
            for (int i = 0; i< RoomPlayers.Count; i++)
             {
-                //RoomPlayers[i].UpdateDataHolder();
+                RoomPlayers[i].UpdateDataHolder();
                 //var conn = RoomPlayers[i].connectionToClient;
                 //var gameplayerInstance = Instantiate(gamePlayerPrefab);
                 //gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
