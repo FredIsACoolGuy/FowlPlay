@@ -341,7 +341,7 @@ MonoBehaviour:
   _test: 0
   _subject: {fileID: 1176862932}
   _network: {fileID: 1796948322}
-  _testNum: 2
+  _testNum: 4
 --- !u!1 &1103180022
 GameObject:
   m_ObjectHideFlags: 0
