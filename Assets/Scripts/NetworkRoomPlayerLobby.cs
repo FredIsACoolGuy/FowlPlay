@@ -43,6 +43,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [SyncVar(hook = nameof(HandleHatStatusChanged))]
     public int hatNum = 0;
 
+    public int connNum;
     //[SyncVar]
     //public var conn;
     #endregion
@@ -115,6 +116,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         maxHatNum = charLookScript.data.hatMeshes.Length;
         
         Room.RoomPlayers.Add(this);
+        Room.ConnIDs.Add(connNum);
 
         //DontDestroyOnLoad(this.gameObject);
         //call update display to show new client

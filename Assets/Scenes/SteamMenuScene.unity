@@ -3930,12 +3930,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 7
+    m_Left: 0
     m_Right: 0
-    m_Top: 7
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 4
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -4526,12 +4526,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 7
+    m_Left: 0
     m_Right: 0
-    m_Top: 7
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 4
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -6373,6 +6373,7 @@ MonoBehaviour:
   roomPlayerPrefab: {fileID: 4271388330296999007, guid: af14a3e092a9176448f36483cc6b0747, type: 3}
   gamePlayerPrefab: {fileID: 8015754391334550006, guid: 2a9976562f27d48478cc96fb52ed7311, type: 3}
   playerSpawnSystem: {fileID: 344826767306143028, guid: a36b2569c030a4e4da972fd1a374003c, type: 3}
+  ConnIDs: 
 --- !u!114 &2064407358
 MonoBehaviour:
   m_ObjectHideFlags: 0
