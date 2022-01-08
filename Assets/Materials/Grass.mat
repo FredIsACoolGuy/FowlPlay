@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
         m_Texture: {fileID: 2800000, guid: eec61efe88a53594ebbd70e8a717101f, type: 3}
-        m_Scale: {x: 1.88, y: 1.81}
+        m_Scale: {x: 0.04, y: 0.04}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
@@ -49,7 +49,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 9e95703322c358f4c92ce120e3eb68e7, type: 3}
-        m_Scale: {x: 6.87, y: 20.14}
+        m_Scale: {x: 0.05, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -65,11 +65,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SubTexHard:
         m_Texture: {fileID: 2800000, guid: 1ab5f1043b5d1e743869e6e819f59dda, type: 3}
-        m_Scale: {x: 5, y: 5}
+        m_Scale: {x: 0.02, y: 0.02}
         m_Offset: {x: 0, y: 0}
     - _SubTexSoft:
         m_Texture: {fileID: 2800000, guid: 5fcb24a412588f74a8676339b03f8b26, type: 3}
-        m_Scale: {x: 4.6, y: 3.73}
+        m_Scale: {x: 0.027, y: 0.0376}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AddTexStrength: 0
@@ -93,7 +93,8 @@ Material:
     - _SoftSubStrength: 0.544
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TexStrength: 0.093
+    - _TexStrength: 0.148
+    - _UVRot: 1.89
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

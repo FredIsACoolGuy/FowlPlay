@@ -153,8 +153,8 @@
 
                 //shadows
                 #if defined(SHADOWS_SCREEN)
-                float shadow = SHADOW_ATTENUATION(i);
-                col -= shadow < _ShadowFactor ? _ShadowStrength : 0;
+                //float shadow = SHADOW_ATTENUATION(i);
+                //col -= shadow < _ShadowFactor ? _ShadowStrength : 0;
                 #endif
                 
                 return col;
@@ -205,7 +205,7 @@
                 float shadow = SHADOW_ATTENUATION(i);
                 half4 col = shadow < _ShadowFactor ? -_ShadowStrength : 0;
 
-                return col;
+                return 0;
                 #else
                 return 0;
                 #endif

@@ -3,6 +3,8 @@
 
     Properties
     {
+        _UVRot ("UV Rotation", Range(0,6.2821)) = 0
+
         [Header(Color)][Space]
         _Color ("Color", Color) = (1,1,1,1)
         _Color2 ("Secondary Color", Color) = (1,1,1,1)
@@ -17,11 +19,6 @@
         _DistortSpeed ("Speed", Float) = 1
         _DistortStrength ("Strength", Range(0,0.2)) = 0.05
         _DistortDir ("Direction", Vector) = (0,0,0,0)
-
-        [Header(Additive)][Space]
-        _AddTex ("Texture", 2D) = "white" {}
-        _AddTexVel ("Texture Velocity", Vector) = (0,0,0,0)
-        _AddTexStrength ("Tex Strength", Range(0,2)) = 1
 
         [Header(Subtractive)][Space]
         _SubTexHard ("Hard Tex", 2D) = "white" {}
@@ -66,6 +63,8 @@
                 SHADOW_COORDS(1)
             };
 
+            float _UVRot;
+
             //Color
             half4 _Color;
             half4 _Color2;
@@ -82,12 +81,6 @@
             float _DistortSpeed;
             half _DistortStrength;
             half2 _DistortDir;
-
-            //Additive
-            sampler2D _AddTex;
-            float4 _AddTex_ST;
-            float2 _AddTexVel;
-            half _AddTexStrength;
 
             //Subtractive
             sampler2D _SubTexHard;
@@ -108,7 +101,9 @@
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = mul(unity_ObjectToWorld, v.vertex).xz;
+                float2 cossin = float2(cos(_UVRot), sin(_UVRot));
+                o.uv = mul(float2x2(cossin.x, -cossin.y, cossin.y, cossin.x), o.uv);
                 TRANSFER_SHADOW(o);
 
                 return o;
@@ -134,9 +129,6 @@
                 tex = saturate(tex);
 
                 tex -= tex2D(_SubTexSoft, TRANSFORM_TEX(i.uv, _SubTexSoft) + _SoftSubVel * _Time[1]).r * _SoftSubStrength;
-                tex = saturate(tex);
-
-                tex += tex2D(_AddTex, TRANSFORM_TEX(i.uv, _AddTex) + _AddTexVel * _Time[1]).r * _AddTexStrength;
                 tex = saturate(tex);
 
                 col -= tex * _TexStrength;
