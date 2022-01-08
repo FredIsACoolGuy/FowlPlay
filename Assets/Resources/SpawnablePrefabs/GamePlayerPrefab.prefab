@@ -5935,6 +5935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1426587091844254053}
+  networkPlayer: {fileID: 8015754391334550006}
   aimScript: {fileID: 8624726156410357284}
 --- !u!1 &7797249048179462509
 GameObject:

@@ -69,7 +69,7 @@ namespace Multiplayer.GameControls
             if (falling)
             {
                 Fall();
-                currentState = 4;
+                currentState = 3;
             }
             else if (knocked)
             {

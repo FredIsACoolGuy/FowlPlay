@@ -7,7 +7,8 @@ namespace Multiplayer.GameControls
 {
     public class SmokeTrailController : MonoBehaviour
     {
-        [SerializeField] PlayerMovementController playerController;
+        //[SerializeField] PlayerMovementController playerController;
+        [SerializeField] NetworkGamePlayer networkPlayer;
         [SerializeField] PlayerAimScript aimScript;
         private ParticleSystem[] children;
         private int activeChild = 2;
@@ -20,22 +21,7 @@ namespace Multiplayer.GameControls
         }
 
         private void Update() {
-            if (playerController.attacking) {
-                if (activeChild != 1) {
-                    children[activeChild].Stop();
-                    children[1].Play();
-                    activeChild = 1;
-                }
-            }
-            else if (playerController.knocked) {
-                if (activeChild != 1) {
-                    children[activeChild].Stop();
-                    children[2].Play();
-                    children[3].Play();
-                    activeChild = 2;
-                }
-            }
-            else if (!playerController.falling) {
+            if (networkPlayer.currentState == 0) {
                 if (activeChild != 0) {
                     children[activeChild].Stop();
                     children[0].Play();
@@ -43,6 +29,21 @@ namespace Multiplayer.GameControls
                 }
                 if (aimScript.fireHeld || aimScript.simpleFireHeld) {
                     children[0].Stop();
+                }
+            }
+            else if (networkPlayer.currentState == 1) {
+                if (activeChild != 1) {
+                    children[activeChild].Stop();
+                    children[1].Play();
+                    activeChild = 1;
+                }
+            }
+            else if (networkPlayer.currentState == 2) {
+                if (activeChild != 2) {
+                    children[activeChild].Stop();
+                    children[2].Play();
+                    children[3].Play();
+                    activeChild = 2;
                 }
             }
         }
