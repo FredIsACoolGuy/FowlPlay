@@ -28,6 +28,9 @@ namespace Multiplayer.GameControls
         private int playerNum;
 
         public bool bounceBack;
+
+        public bool inverted=false;
+
         private GameControls Controls
         {
             get
@@ -107,7 +110,7 @@ namespace Multiplayer.GameControls
                 Debug.Log("Picked");
                 gamePlayer.pickUpsCurrentlyHeld++;
 
-                gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,3), gamePlayer.playerNum);
+                gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
 
                 Destroy(other.gameObject);
             }
@@ -140,7 +143,15 @@ namespace Multiplayer.GameControls
         private void SetMovement(Vector2 movement)
         {
             Debug.Log("CONTROLLINGGG");
-            prevInput = movement;
+
+            if (inverted)
+            {
+                prevInput = movement * -1f;
+            }
+            else
+            {
+                prevInput = movement;
+            }
         }
 
         [Client]

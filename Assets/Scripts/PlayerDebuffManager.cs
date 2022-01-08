@@ -111,6 +111,9 @@ public class PlayerDebuffManager : NetworkBehaviour
             case 2:         //SLOW AIM
                 playerMovementController.bounceBack = true;
                 break;
+            case 3:         //SLOW AIM
+                playerMovementController.inverted = true;
+                break;
         }
     }
 }

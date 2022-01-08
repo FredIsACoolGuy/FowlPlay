@@ -2075,7 +2075,7 @@ MonoBehaviour:
   startPos: {x: 0, y: -500}
   bottomPos: -500
   topPos: 130
-  scrollSpeed: 60
+  scrollSpeed: 75
   fadeSpeed: 4
 --- !u!1 &827342809
 GameObject:
@@ -4679,7 +4679,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9150943, g: 0.69908744, b: 0.67768776, a: 1}
+  m_BackGroundColor: {r: 0.7245377, g: 0.9056604, b: 0.51690996, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
