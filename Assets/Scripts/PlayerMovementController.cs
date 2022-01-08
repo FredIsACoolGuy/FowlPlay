@@ -26,6 +26,11 @@ namespace Multiplayer.GameControls
         private NetworkGamePlayer gamePlayer;
 
         private int playerNum;
+
+        public bool bounceBack;
+
+        public bool inverted=false;
+
         private GameControls Controls
         {
             get
@@ -40,6 +45,7 @@ namespace Multiplayer.GameControls
             enabled = true;
             Controls.Player.Move.performed += ctx => SetMovement(ctx.ReadValue<Vector2>());
             Controls.Player.Move.canceled += ctx => ResetMovement();
+            Controls.Player.Pause.performed += ctx => ShowPauseScreen();
 
             gamePlayer = GetComponent<NetworkGamePlayer>();
             playerNum = gamePlayer.playerNum;
@@ -73,7 +79,9 @@ namespace Multiplayer.GameControls
             else if (attacking)
             {
                 CheckAttackZone(this.transform, facingDir);
-                controller.Move(attackDir * Time.deltaTime);
+                controller.Move(attackDir * Time.deltaTime);     
+            playerMesh.eulerAngles = new Vector3(0f, Mathf.LerpAngle(playerMesh.eulerAngles.y, Vector3.SignedAngle(Vector3.right, facingDir, Vector3.up), Time.deltaTime * turnSpeed *2f), 0f);
+
                 currentState = 1;
             }
             else
@@ -100,20 +108,50 @@ namespace Multiplayer.GameControls
             else if (other.CompareTag("Pickup"))
             {
                 Debug.Log("Picked");
-                //targetPitCentre = other.transform;
-                //falling = true;
                 gamePlayer.pickUpsCurrentlyHeld++;
+
+                gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
+
                 Destroy(other.gameObject);
             }
         }
 
-        
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.gameObject.CompareTag("Wall"))
+            {
+                if (knocked)
+                {
+                    knockDir = Vector3.Reflect(knockDir, hit.normal);
+                }
+                else if (attacking)
+                {
+                    attackDir = Vector3.Reflect(attackDir, hit.normal);
+                    facingDir = attackDir.normalized;
+                }
+            }
+
+            if(bounceBack && hit.gameObject.CompareTag("Player"))
+            {
+                attackDir = Vector3.Reflect(attackDir, hit.normal);
+            }
+        }
+
 
         [Client]
         private void SetMovement(Vector2 movement)
         {
             Debug.Log("CONTROLLINGGG");
-            prevInput = movement;
+
+            if (inverted)
+            {
+                prevInput = movement * -1f;
+            }
+            else
+            {
+                prevInput = movement;
+            }
         }
 
         [Client]
@@ -250,6 +288,11 @@ namespace Multiplayer.GameControls
             knocked = false;
         }
 
+        public GameObject pauseScreen;
+        private void ShowPauseScreen()
+        {
+            pauseScreen.SetActive(!pauseScreen.activeSelf);
+        }
 
         private void OnDrawGizmos()
         {

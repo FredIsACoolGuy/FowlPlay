@@ -38,6 +38,7 @@ public class NetworkManagerOverride : NetworkManager
     //in game list
     public List<NetworkGamePlayer> GamePlayers { get; set;} = new List<NetworkGamePlayer>();
 
+    public List<int> ConnIDs = new List<int>();
     //load all prefabs that can be spawned into the networked scene
     public override void OnStartServer()
     {
@@ -106,6 +107,7 @@ public class NetworkManagerOverride : NetworkManager
             NetworkRoomPlayerLobby roomPlayerInstance = Instantiate(roomPlayerPrefab);
 
             roomPlayerInstance.IsLeader = isLeader;
+            roomPlayerInstance.connNum = conn.connectionId;
             //connects spawned prefab to this specific connection
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             Debug.Log("CONN ID:" + conn.connectionId);
