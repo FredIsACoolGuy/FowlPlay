@@ -132,7 +132,7 @@ public class NetworkGamePlayer : NetworkBehaviour
     }
 
 
-    [Server] //updates hat num
+    [Command] //updates playerState num
     public void SetPlayerState(int num)
     {
         this.currentState = num;
