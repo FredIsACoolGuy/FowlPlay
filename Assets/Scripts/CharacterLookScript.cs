@@ -123,8 +123,14 @@ public class CharacterLookScript : NetworkBehaviour
         if (currentBird != null)
         {
             Debug.Log("BIRD IS OK");
-            currentHat = Instantiate(data.hatMeshes[hatNum], currentBird.transform.GetComponentInChildren<OutlineColor>().transform);
+            Transform hatPos = currentBird.transform.GetComponentInChildren<OutlineColor>().transform;
+            currentHat = Instantiate(data.hatMeshes[hatNum], hatPos.position, data.hatMeshes[hatNum].transform.rotation);
+
+            currentHat.transform.localScale *= currentBird.transform.lossyScale.x;
+            currentHat.transform.SetParent(hatPos);
+
             currentHat.transform.localPosition = Vector3.zero;
+            currentHat.transform.localRotation = data.hatMeshes[hatNum].transform.localRotation;
             currentHatNum = hatNum;
         }
 
