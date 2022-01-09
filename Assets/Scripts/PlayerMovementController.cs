@@ -88,9 +88,10 @@ namespace Multiplayer.GameControls
             }
             else if (knocked)
             {
-                knockedTime += Time.deltaTime;
-                float j =knockedTime/knockTimeMultiplier;
-                knockDir = new Vector3(knockDir.x, (knockedCurve.Evaluate(j)+startY)-transform.position.y,knockDir.z);
+              //  knockedTime += Time.deltaTime;
+               // float j =knockedTime/knockTimeMultiplier;
+                //knockDir = new Vector3(knockDir.x, (knockedCurve.Evaluate(j)+startY)-transform.position.y,knockDir.z);
+                
                 controller.Move(knockDir * knockPowerMultiplier * Time.deltaTime);
                 currentState = 2;
             }
@@ -145,7 +146,7 @@ namespace Multiplayer.GameControls
                 if (knocked)
                 {
                     knockDir = Vector3.Reflect(knockDir, hit.normal);
-                    cameraShakeScript.CameraShake(3f, 40, 1.6f);
+                    //cameraShakeScript.CameraShake(3f, 40, 1.6f);
                     //soundMan.playHit();
                 }
                 else if (attacking)
@@ -314,7 +315,7 @@ namespace Multiplayer.GameControls
             Debug.Log("KNOCKED");
             knockedTime =0f;
             //soundMan.playHit();
-            cameraShakeScript.CameraShake();
+            //cameraShakeScript.CameraShake();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
