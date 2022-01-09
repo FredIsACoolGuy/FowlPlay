@@ -53,6 +53,7 @@ public class PanelManager : MonoBehaviour
     {
         _panels[index].gameObject.SetActive(true);
         _panels[index].InitializePanel();
+        transform.position = Camera.main.ScreenToViewportPoint(transform.position);
     }
 
     //the order is correct here

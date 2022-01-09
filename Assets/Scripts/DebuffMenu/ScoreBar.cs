@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreBar : MonoBehaviour
 {
-    private int _score = 0;
+    private float _score = 0;
     private float _scoreInPercent = 0;
 
     Image _scoreImg;
@@ -21,23 +21,22 @@ public class ScoreBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_percent < 1)
+        if (_percent < _scoreInPercent)
         {
-            _scoreImg.fillAmount = Mathf.Lerp(0, 1, _percent);
+            _scoreImg.fillAmount = Mathf.Lerp(0, _scoreInPercent, _percent);
             _percent += _speed * Time.deltaTime;
         }
         else
         {
-            _scoreImg.fillAmount = 1;
+            _scoreImg.fillAmount = _scoreInPercent;
         }
-
     }
 
     //takes max and divides it and compares percentage of current score to max
-    public void SetScore(int score, int max, float speed)
+    public void SetScore(float score, float max, float speed)
     {
         _speed = speed;
         _score = score;
-        _scoreInPercent = score / max;
+        _scoreInPercent = (score / max);
     }
 }
