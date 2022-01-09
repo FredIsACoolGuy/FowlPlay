@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameRules
   m_EditorClassIdentifier: 
   numOfRounds: 10
-  timePerRound: 60
+  timePerRound: 140
   howCommonArePowerups: 3

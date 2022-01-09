@@ -16,9 +16,9 @@ namespace Multiplayer.GameControls
 
         public Vector3 pointerOffset;
 
-        private bool simpleFireHeld = false;
+        public bool simpleFireHeld = false;
 
-        private bool fireHeld=false;
+        public bool fireHeld=false;
         private bool freshFire = false;
         
         public float maxTimeHeld = 2f;
@@ -30,6 +30,7 @@ namespace Multiplayer.GameControls
 
         public float slowDown;
 
+        private PlayerSoundManager soundMan;
 
         #region shittyNewCursourMaybe
         public RectTransform cursor;
@@ -58,7 +59,8 @@ namespace Multiplayer.GameControls
         public override void OnStartAuthority()
         {
             movementController = GetComponent<PlayerMovementController>();
-            
+            soundMan = GetComponent<PlayerSoundManager>();
+
             cam = Camera.main;
             enabled = true;
             cursorImage = cursor.GetComponent<Image>();
@@ -89,7 +91,7 @@ namespace Multiplayer.GameControls
         {
             Controls.Disable();
         }
-        float timeHeld;
+        public float timeHeld;
         private void Fire(float value)
         {
             if (!simpleFireHeld)
@@ -97,7 +99,7 @@ namespace Multiplayer.GameControls
                 if (value > 0.5f)
                 {
                     Cursor.visible = false;
-
+                    soundMan.playChargeUp();
                     cursorImage.enabled = false;
                     arrow.enabled = true;
                     fireHeld = true;
@@ -121,6 +123,7 @@ namespace Multiplayer.GameControls
                 if (value > 0.5f)
                 {
                     cursorImage.enabled = false;
+                    soundMan.playChargeUp();
                     arrow.enabled = true;
                     simpleFireHeld = true;
                     freshFire = true;
@@ -152,32 +155,7 @@ namespace Multiplayer.GameControls
                     cursor.position = cam.WorldToScreenPoint(hit.point);
                     storedMouse = mousePos;
                 }
-           // }
-           // else
-           // {
-           //     cursor.position = cursor.position + new Vector3(mousePos.x - storedMouse.x, mousePos.y - storedMouse.y, 0f);
-           //     storedMouse = mousePos;
-           // }
-            ///
-            ///cursor
-            ///
-            //if (!simpleFireHeld && !fireHeld)
-            //{
-            //    Vector3 newCursorPos = new Vector3();
-            //    RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas, mousePos, cam, out newCursorPos);
-            //    cursor.anchoredPosition = new Vector2(mousePos.x - Screen.width / 2, mousePos.y - Screen.height / 2) / 2.2f;
-                
-            ////    Ray ray = cam.ScreenPointToRay(cursor.position);
-            ////    RaycastHit hit = new RaycastHit();
-            ////    if (Physics.Raycast(ray, out hit))
-            ////    {
-            ////        pointerOffset = hit.point - transform.position;
-            ////    }
-            //}
-           // else
-           // {
-            //    cursor.anchoredPosition = cam.WorldToScreenPoint(transform.position + pointerOffset);
-            //}
+
         }
 
         [Client]
@@ -198,7 +176,8 @@ namespace Multiplayer.GameControls
                 movementController.movementSpeed = movementController.normalMovementSpeed;
                 //do attack
                 movementController.Attack(Mathf.Clamp(timeHeld, 0f, maxTimeHeld));
-
+                soundMan.playAttack();
+                
                 cameraShakeScript.CameraShake(0.6f, 50, timeHeld * 0.25f);
                 cameraShakeScript.cameraZoom = 1.2f;
             }

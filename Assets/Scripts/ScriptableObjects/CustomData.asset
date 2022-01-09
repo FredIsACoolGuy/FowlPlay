@@ -23,14 +23,20 @@ MonoBehaviour:
   - {r: 1, g: 0.7137255, b: 0.9568628, a: 1}
   typeMeshes:
   - {fileID: 3199738788517908876, guid: 53be768dfd1faf7478bc931eba236ce2, type: 3}
+  - {fileID: 6933254881750305446, guid: 021161210a7cad9498ab12344d197ffe, type: 3}
   - {fileID: 2254759824460387535, guid: eb11975ebab7b864999fc7e5dafe680e, type: 3}
   - {fileID: 8566035865382312653, guid: f6b5f9d3add1d054896a5f7b4d28dc39, type: 3}
+  - {fileID: 8235921312522933258, guid: a61c05f2dc9f26d44b1b3d69bd5a883e, type: 3}
   - {fileID: 2666314678967302658, guid: c5e0ac63cd568c940ad47988e0fbaa40, type: 3}
+  - {fileID: 4405139916345163603, guid: f57ea938f96b39b4bb4446b7ca18dd8b, type: 3}
   typeNames:
   - Duck
+  - Song Bird
   - Goose
   - Penguin
+  - Hummingbird
   - Cayuga
+  - Robin
   hatMeshes:
   - {fileID: 3610272347860685484, guid: d2254d477127b3f40a1f330b1519fc21, type: 3}
   - {fileID: 4499804081341295016, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
@@ -40,6 +46,7 @@ MonoBehaviour:
   - {fileID: 2550978011625377337, guid: 59e015b4040c0c046ade130fb2c979c2, type: 3}
   - {fileID: 9047295168665053847, guid: 49c5a282e5861dd439a556ca27f6dec0, type: 3}
   - {fileID: 7288543202414086890, guid: 0d52999bd08642448a67d7bd11beb60a, type: 3}
+  - {fileID: 8433856132159486941, guid: 2e4b94369174df24ca98ea4d7c29a57d, type: 3}
   hatNames:
   - Party Hat
   - Golden Goose
@@ -49,3 +56,4 @@ MonoBehaviour:
   - Froggy Bucket
   - Grad Cap
   - Top Hat
+  - Crown

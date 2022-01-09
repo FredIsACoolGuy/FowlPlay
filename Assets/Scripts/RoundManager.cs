@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 
 public class RoundManager : NetworkBehaviour
 {
@@ -9,6 +10,8 @@ public class RoundManager : NetworkBehaviour
     public GameObject pickup;
     private List<Transform> pickupSpawnPoints = new List<Transform>(); 
     int pickupSpawnInterval;
+    int currentSeconds = 0;
+    public TMP_Text timer;
 
     [ServerCallback]
     void Start()
@@ -18,6 +21,8 @@ public class RoundManager : NetworkBehaviour
             pickupSpawnPoints.Add(child);
         }
 
+        currentSeconds = gameRules.timePerRound;
+
         StartCoroutine(RoundTimer());
 
         pickupSpawnInterval = gameRules.timePerRound / (gameRules.howCommonArePowerups+1);
@@ -25,10 +30,49 @@ public class RoundManager : NetworkBehaviour
         StartCoroutine(PickupSpawner());
     }
 
+    
+
     [Server]
     private IEnumerator RoundTimer()
     {
-        yield return new WaitForSeconds(gameRules.timePerRound);
+        yield return new WaitForSeconds(1f);
+        currentSeconds--;
+        if (currentSeconds >= 0)
+        {
+            timer.text = displayTime(currentSeconds);
+            StartCoroutine(RoundTimer());
+        }
+    }
+
+    private string displayTime(int seconds)
+    {
+        string output;
+        if (seconds / 60 != 0)
+        {
+            if(seconds / 60 > 9)
+            {
+                output = (seconds / 60).ToString() + ":";
+            }
+            else
+            {
+                output = "0"+(seconds / 60).ToString() + ":";
+            }
+        }
+        else
+        {
+            output = "00:";
+        }
+
+        if (seconds % 60 > 9)
+        {
+            output = output + (seconds % 60).ToString();
+        }
+        else
+        {
+            output = output + "0" + (seconds % 60).ToString();
+        }
+
+        return output;
     }
 
     [Server]

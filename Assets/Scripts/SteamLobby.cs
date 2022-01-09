@@ -157,7 +157,10 @@ public class SteamLobby : MonoBehaviour
         Debug.Log("LeavingLobby");
         //leaves the current lobby
         SteamMatchmaking.LeaveLobby(playerInfo.m_steamIDLobby);
-        
+        while (SteamMatchmaking.GetLobbyByIndex(0).IsValid()==true)
+        {
+            SteamMatchmaking.LeaveLobby(SteamMatchmaking.GetLobbyByIndex(0));
+        }
     }
 
 

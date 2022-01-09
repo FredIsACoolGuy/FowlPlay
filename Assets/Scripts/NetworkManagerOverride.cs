@@ -38,6 +38,7 @@ public class NetworkManagerOverride : NetworkManager
     //in game list
     public List<NetworkGamePlayer> GamePlayers { get; set;} = new List<NetworkGamePlayer>();
 
+    public List<int> ConnIDs = new List<int>();
     //load all prefabs that can be spawned into the networked scene
     public override void OnStartServer()
     {
@@ -68,10 +69,8 @@ public class NetworkManagerOverride : NetworkManager
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         //if there is a steam lobby attached that means this is using Steamworks, so the client has to be disconnected from the steam lobby
-        if (GetComponent<SteamLobby>() != null)
-        {
-            GetComponent<SteamLobby>().ClientDisconnect();
-        }
+        GetComponent<SteamLobby>().ClientDisconnect();
+
         base.OnClientDisconnect(conn);
         OnClientDisconnected?.Invoke();
     }
@@ -106,6 +105,7 @@ public class NetworkManagerOverride : NetworkManager
             NetworkRoomPlayerLobby roomPlayerInstance = Instantiate(roomPlayerPrefab);
 
             roomPlayerInstance.IsLeader = isLeader;
+            roomPlayerInstance.connNum = conn.connectionId;
             //connects spawned prefab to this specific connection
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
             Debug.Log("CONN ID:" + conn.connectionId);

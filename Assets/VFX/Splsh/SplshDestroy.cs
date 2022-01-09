@@ -8,7 +8,6 @@ public class SplshDestroy : MonoBehaviour
         Material mat = GetComponent<Renderer>().material;
 
         mat.SetFloat("_StartTime", Time.timeSinceLevelLoad);
-        Debug.Break();
 
         Vector4 durations = mat.GetVector("_Duration");
         float duration = Mathf.Max(durations.x, durations.y);

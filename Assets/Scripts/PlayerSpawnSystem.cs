@@ -62,7 +62,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
     {
         Debug.Log("BUTTS");
         pdh = GameObject.Find("PlayerDataHolder").GetComponent<PlayerDataHolder>();
-        nextIndex = conn.connectionId;
+        nextIndex = Room.ConnIDs.IndexOf(conn.connectionId);
         Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
         //Transform spawnPoint = spawnPoints[nextIndex];
         //conn.connectionId

@@ -59,6 +59,14 @@ namespace Multiplayer.GameControls
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7cfbeded-8d72-4e38-97b3-a68b90fa0e48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -226,6 +234,17 @@ namespace Multiplayer.GameControls
                     ""action"": ""DebugButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b7ce533-64c5-48f7-b765-429d94a699ad"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -267,6 +286,7 @@ namespace Multiplayer.GameControls
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_SimpleFire = m_Player.FindAction("SimpleFire", throwIfNotFound: true);
             m_Player_DebugButton = m_Player.FindAction("DebugButton", throwIfNotFound: true);
+            m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -321,6 +341,7 @@ namespace Multiplayer.GameControls
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_SimpleFire;
         private readonly InputAction m_Player_DebugButton;
+        private readonly InputAction m_Player_Pause;
         public struct PlayerActions
         {
             private @GameControls m_Wrapper;
@@ -330,6 +351,7 @@ namespace Multiplayer.GameControls
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @SimpleFire => m_Wrapper.m_Player_SimpleFire;
             public InputAction @DebugButton => m_Wrapper.m_Player_DebugButton;
+            public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -354,6 +376,9 @@ namespace Multiplayer.GameControls
                     @DebugButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
                     @DebugButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
                     @DebugButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugButton;
+                    @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -373,6 +398,9 @@ namespace Multiplayer.GameControls
                     @DebugButton.started += instance.OnDebugButton;
                     @DebugButton.performed += instance.OnDebugButton;
                     @DebugButton.canceled += instance.OnDebugButton;
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                 }
             }
         }
@@ -402,6 +430,7 @@ namespace Multiplayer.GameControls
             void OnFire(InputAction.CallbackContext context);
             void OnSimpleFire(InputAction.CallbackContext context);
             void OnDebugButton(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }
