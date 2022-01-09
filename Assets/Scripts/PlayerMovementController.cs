@@ -13,7 +13,7 @@ namespace Multiplayer.GameControls
         public float turnSpeed = 5f;
         [SerializeField] private CharacterController controller = null;
 
-        private Vector2 prevInput;
+        public Vector2 prevInput;
 
         private GameControls controls;
 
@@ -31,6 +31,17 @@ namespace Multiplayer.GameControls
 
         public bool inverted=false;
 
+        private PlayerSoundManager soundMan;
+
+        private float startY;
+
+        [SerializeField]
+        private AnimationCurve knockedCurve;
+        public float knockedHeight;
+
+        public CameraShakeScript cameraShakeScript;
+
+        public bool pauseMovement=false;
         private GameControls Controls
         {
             get
@@ -47,8 +58,12 @@ namespace Multiplayer.GameControls
             Controls.Player.Move.canceled += ctx => ResetMovement();
             Controls.Player.Pause.performed += ctx => ShowPauseScreen();
 
+            soundMan = GetComponent<PlayerSoundManager>();
+            
             gamePlayer = GetComponent<NetworkGamePlayer>();
             playerNum = gamePlayer.playerNum;
+
+            startY = transform.position.y;
         }
 
 
@@ -73,7 +88,10 @@ namespace Multiplayer.GameControls
             }
             else if (knocked)
             {
-                controller.Move(knockDir * knockPowerMultiplier* Time.deltaTime);
+                knockedTime += Time.deltaTime;
+                float j =knockedTime/knockTimeMultiplier;
+                knockDir = new Vector3(knockDir.x, (knockedCurve.Evaluate(j)+startY)-transform.position.y,knockDir.z);
+                controller.Move(knockDir * knockPowerMultiplier * Time.deltaTime);
                 currentState = 2;
             }
             else if (attacking)
@@ -101,6 +119,7 @@ namespace Multiplayer.GameControls
             if (other.CompareTag("Pit"))
             {
                 Debug.Log("Pitted");
+                //soundMan.playFall();
                 targetPitCentre = other.transform;
                 falling = true;
 
@@ -108,6 +127,7 @@ namespace Multiplayer.GameControls
             else if (other.CompareTag("Pickup"))
             {
                 Debug.Log("Picked");
+                soundMan.playPickup();
                 gamePlayer.pickUpsCurrentlyHeld++;
 
                 gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
@@ -119,23 +139,31 @@ namespace Multiplayer.GameControls
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
+
             if (hit.gameObject.CompareTag("Wall"))
             {
                 if (knocked)
                 {
                     knockDir = Vector3.Reflect(knockDir, hit.normal);
+                    cameraShakeScript.CameraShake(3f, 40, 1.6f);
+                    soundMan.playHit();
                 }
                 else if (attacking)
                 {
                     attackDir = Vector3.Reflect(attackDir, hit.normal);
                     facingDir = attackDir.normalized;
+                    cameraShakeScript.CameraShake(3f, 40, 1.6f);
+                    soundMan.playHit();
                 }
             }
 
             if(bounceBack && hit.gameObject.CompareTag("Player"))
             {
                 attackDir = Vector3.Reflect(attackDir, hit.normal);
+                cameraShakeScript.CameraShake(3f, 40, 1.6f);
             }
+
+
         }
 
 
@@ -223,7 +251,14 @@ namespace Multiplayer.GameControls
         {
             //controller.detectCollisions = false;
             //this.gameObject.layer = 10;
-            controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
+            if (!pauseMovement)
+            {
+                controller.Move((targetPitCentre.position - transform.position).normalized * fallSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, targetPitCentre.position) < 0.5f)
+                {
+                    pauseMovement = true;
+                }
+            }
         }
 
         [Header("ATTACKING")]
@@ -239,6 +274,7 @@ namespace Multiplayer.GameControls
         public void Attack(float attackAmount)
         {
            attackDir = (facingDir * attackSpeed * attackAmount) +(facingDir * minAttackDistance);
+           cameraShakeScript.CameraShake();
            StartCoroutine(doAttack(attackAmount * attackTimeMultiplier));
         }
 
@@ -271,10 +307,14 @@ namespace Multiplayer.GameControls
         private Vector3 knockDir;
         public float knockPowerMultiplier;
         public float knockTimeMultiplier;
+        private float knockedTime;
         [ClientRpc]
         public void Knockback(Vector3 hitFrom, float power)
         {
             Debug.Log("KNOCKED");
+            knockedTime =0f;
+            //soundMan.playHit();
+            cameraShakeScript.CameraShake();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
@@ -292,6 +332,7 @@ namespace Multiplayer.GameControls
         private void ShowPauseScreen()
         {
             pauseScreen.SetActive(!pauseScreen.activeSelf);
+            Cursor.visible = pauseScreen.activeSelf;
         }
 
         private void OnDrawGizmos()

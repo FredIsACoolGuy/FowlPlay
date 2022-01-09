@@ -53,17 +53,20 @@ public class OutlineColor : MonoBehaviour
     public IEnumerator SetColorNoScale()
     {
         yield return new WaitForEndOfFrame();
-
-        OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
-        Color col = parentScript.outlineColor;
-
-        if (renderer == null)
-            renderer = GetComponent<Renderer>();
-        Material[] mats = renderer.materials;
-
-        foreach (Material mat in mats)
+        if (transform.parent.GetComponent<OutlineColor>() != null)
         {
-            mat.SetColor("_OutlineColor", col);
+            OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
+            Color col = parentScript.outlineColor;
+
+            if (renderer == null)
+                renderer = GetComponent<Renderer>();
+            Material[] mats = renderer.materials;
+
+            foreach (Material mat in mats)
+            {
+                mat.SetColor("_OutlineColor", col);
+            }
         }
+       
     }
 }

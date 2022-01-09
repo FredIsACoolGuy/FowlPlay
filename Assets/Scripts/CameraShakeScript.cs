@@ -49,16 +49,22 @@ public class CameraShakeScript : MonoBehaviour
 
     public void CameraShake()
     {
-        shakeAmount = defaultShakeAmount;
-        shakeSpeed = defaultShakeSpeed;
-        StartCoroutine(CameraShaking(defaultShakeTime));
+        if (cam.enabled)
+        {
+            shakeAmount = defaultShakeAmount;
+            shakeSpeed = defaultShakeSpeed;
+            StartCoroutine(CameraShaking(defaultShakeTime));
+        }
     }
 
     public void CameraShake(float amount, float speed, float time)
     {
-        shakeAmount = amount;
-        shakeSpeed = speed;
-        StartCoroutine(CameraShaking(time));
+        if (cam.enabled)
+        {
+            shakeAmount = amount;
+            shakeSpeed = speed;
+            StartCoroutine(CameraShaking(time));
+        }
     }
 
     public IEnumerator CameraShaking(float time)
