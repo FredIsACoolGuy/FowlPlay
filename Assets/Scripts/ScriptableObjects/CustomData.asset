@@ -28,6 +28,7 @@ MonoBehaviour:
   - {fileID: 8566035865382312653, guid: f6b5f9d3add1d054896a5f7b4d28dc39, type: 3}
   - {fileID: 8235921312522933258, guid: a61c05f2dc9f26d44b1b3d69bd5a883e, type: 3}
   - {fileID: 2666314678967302658, guid: c5e0ac63cd568c940ad47988e0fbaa40, type: 3}
+  - {fileID: 4405139916345163603, guid: f57ea938f96b39b4bb4446b7ca18dd8b, type: 3}
   typeNames:
   - Duck
   - Song Bird
@@ -35,6 +36,7 @@ MonoBehaviour:
   - Penguin
   - Hummingbird
   - Cayuga
+  - Robin
   hatMeshes:
   - {fileID: 3610272347860685484, guid: d2254d477127b3f40a1f330b1519fc21, type: 3}
   - {fileID: 4499804081341295016, guid: 6112a78cea9975342813c1f63cbbffff, type: 3}
