@@ -105,7 +105,7 @@ namespace Multiplayer.GameControls
             if (other.CompareTag("Pit"))
             {
                 Debug.Log("Pitted");
-                soundMan.playFall();
+                //soundMan.playFall();
                 targetPitCentre = other.transform;
                 falling = true;
 
@@ -281,7 +281,7 @@ namespace Multiplayer.GameControls
         public void Knockback(Vector3 hitFrom, float power)
         {
             Debug.Log("KNOCKED");
-            soundMan.playHit();
+            //soundMan.playHit();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             

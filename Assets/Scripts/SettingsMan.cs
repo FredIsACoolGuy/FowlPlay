@@ -13,6 +13,12 @@ public class SettingsMan : MonoBehaviour
     public AudioSource musicMan;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        DontDestroyOnLoad(musicMan.gameObject);
+
+    }
+
     void Start()
     {
         masterSlider.value = settingsHolder.masterVolume;
@@ -20,7 +26,6 @@ public class SettingsMan : MonoBehaviour
         sfxSlider.value = settingsHolder.sfxVolume;
         updateValues();
 
-        DontDestroyOnLoad(musicMan.gameObject);
     }
 
 
