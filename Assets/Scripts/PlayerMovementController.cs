@@ -148,14 +148,14 @@ namespace Multiplayer.GameControls
                 {
                     knockDir = Vector3.Reflect(knockDir, hit.normal);
                     //cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    //soundMan.playHit();
+                    soundMan.playHit();
                 }
                 else if (attacking)
                 {
                     attackDir = Vector3.Reflect(attackDir, hit.normal);
                     facingDir = attackDir.normalized;
                     cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    //soundMan.playHit();
+                    soundMan.playHit();
                 }
             }
 
@@ -318,7 +318,7 @@ namespace Multiplayer.GameControls
         {
             Debug.Log("KNOCKED");
             knockedTime =0f;
-            //soundMan.playHit();
+            soundMan.playHit();
             //cameraShakeScript.CameraShake();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
