@@ -13,7 +13,7 @@ namespace Multiplayer.GameControls
         public float turnSpeed = 5f;
         [SerializeField] private CharacterController controller = null;
 
-        private Vector2 prevInput;
+        public Vector2 prevInput;
 
         private GameControls controls;
 
@@ -31,6 +31,8 @@ namespace Multiplayer.GameControls
 
         public bool inverted=false;
 
+        private PlayerSoundManager soundMan;
+
         private GameControls Controls
         {
             get
@@ -47,6 +49,8 @@ namespace Multiplayer.GameControls
             Controls.Player.Move.canceled += ctx => ResetMovement();
             Controls.Player.Pause.performed += ctx => ShowPauseScreen();
 
+            soundMan = GetComponent<PlayerSoundManager>();
+            
             gamePlayer = GetComponent<NetworkGamePlayer>();
             playerNum = gamePlayer.playerNum;
         }
@@ -101,6 +105,7 @@ namespace Multiplayer.GameControls
             if (other.CompareTag("Pit"))
             {
                 Debug.Log("Pitted");
+                soundMan.playFall();
                 targetPitCentre = other.transform;
                 falling = true;
 
@@ -108,6 +113,7 @@ namespace Multiplayer.GameControls
             else if (other.CompareTag("Pickup"))
             {
                 Debug.Log("Picked");
+                soundMan.playPickup();
                 gamePlayer.pickUpsCurrentlyHeld++;
 
                 gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
@@ -275,6 +281,7 @@ namespace Multiplayer.GameControls
         public void Knockback(Vector3 hitFrom, float power)
         {
             Debug.Log("KNOCKED");
+            soundMan.playHit();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
