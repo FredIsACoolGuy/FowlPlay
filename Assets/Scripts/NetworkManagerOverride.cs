@@ -69,10 +69,8 @@ public class NetworkManagerOverride : NetworkManager
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         //if there is a steam lobby attached that means this is using Steamworks, so the client has to be disconnected from the steam lobby
-        if (GetComponent<SteamLobby>() != null)
-        {
-            GetComponent<SteamLobby>().ClientDisconnect();
-        }
+        GetComponent<SteamLobby>().ClientDisconnect();
+
         base.OnClientDisconnect(conn);
         OnClientDisconnected?.Invoke();
     }

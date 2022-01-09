@@ -2360,7 +2360,7 @@ GameObject:
   - component: {fileID: 8858775891044730146}
   - component: {fileID: 5933427371698162492}
   - component: {fileID: 8765173681150988294}
-  - component: {fileID: 506136414628297812}
+  - component: {fileID: 799086912777205924}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -2470,8 +2470,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 506136414628297812}
-        m_TargetAssemblyTypeName: DisconnectFromGameButton, Assembly-CSharp
+      - m_Target: {fileID: 799086912777205924}
+        m_TargetAssemblyTypeName: QuitGameButton, Assembly-CSharp
         m_MethodName: clicked
         m_Mode: 1
         m_Arguments:
@@ -2501,7 +2501,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &506136414628297812
+--- !u!114 &799086912777205924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2510,11 +2510,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3496051200561566681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36c4e6b5531eff47bcb0c5984e52fdb, type: 3}
+  m_Script: {fileID: 11500000, guid: cb9447a600deb8f448642d8588b2492e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneNum: 0
-  isLeader: 0
 --- !u!1 &3552364949728439385
 GameObject:
   m_ObjectHideFlags: 0
@@ -6165,6 +6163,33 @@ MonoBehaviour:
   attackCollider: {fileID: 4032565443859905301}
   bounceBack: 0
   inverted: 0
+  knockedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.6569111
+      outSlope: 3.6569111
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.027752973
+    - serializedVersion: 3
+      time: 0.9992605
+      value: 0.000001007691
+      inSlope: -4.2898254
+      outSlope: -4.2898254
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03191101
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  knockedHeight: 20
+  cameraShakeScript: {fileID: 5380583736752752129}
+  pauseMovement: 0
   facingDir: {x: 0, y: 0, z: 0}
   accelerationSpeed: 24
   decelerationSpeed: 18
@@ -6356,9 +6381,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c9356d3666c1d6646b66064121ed2610, type: 3}
   - {fileID: 8300000, guid: 49b7c6ce565b96046a5268f650791fd3, type: 3}
   footSpeed: 1
-  chargeUps:
-  - {fileID: 8300000, guid: 8d0c4738f7f957d4a82fd6b78ff47a47, type: 3}
-  - {fileID: 8300000, guid: 44c0668618b271247a0866e8a0442196, type: 3}
+  chargeUp: {fileID: 8300000, guid: 8d0c4738f7f957d4a82fd6b78ff47a47, type: 3}
   attacks:
   - {fileID: 8300000, guid: 707b8277bb20d76438c6502fd4b4037e, type: 3}
   - {fileID: 8300000, guid: 288acd4f8a6b15047a4b5d69ca044508, type: 3}
@@ -6380,16 +6403,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 84895b9eca6fee747a53dcdce082427c, type: 3}
   - {fileID: 8300000, guid: beec8c0abac769d4da1a6735a27c6960, type: 3}
   - {fileID: 8300000, guid: acc44020cf8e4f94c8fe3afd1d6fcf34, type: 3}
-  - {fileID: 8300000, guid: 15b536be9176af04d889bdc6b5f65d19, type: 3}
-  - {fileID: 8300000, guid: 4d52fddce2dcfa643bfbd7fa61f28f1e, type: 3}
-  - {fileID: 8300000, guid: 317ff25c90c4c914aacd968ba0396e34, type: 3}
-  - {fileID: 8300000, guid: a181a127b7e9d8340920a06d7b5a647a, type: 3}
-  - {fileID: 8300000, guid: 429735fdfc2e2cf438b67def68561cb1, type: 3}
-  - {fileID: 8300000, guid: 45eabb0fae74c124398af2abb02b43f7, type: 3}
-  - {fileID: 8300000, guid: b71e6550a5a524d45b49fd412f7905b8, type: 3}
-  - {fileID: 8300000, guid: 0821f3b977ae5ea459bc20f9cbb7b341, type: 3}
-  - {fileID: 8300000, guid: f9e26aa22e08d644aa6cb6e057597cac, type: 3}
-  - {fileID: 8300000, guid: d3c0f1e45768745499abb6e054ec0396, type: 3}
   falls:
   - {fileID: 8300000, guid: 9531f530aa24fc141890c989bb9a6283, type: 3}
   - {fileID: 8300000, guid: 620b62badaa027b4a8aa48f6272239b5, type: 3}
@@ -6409,6 +6422,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a1ea2b0870d8b8344a632d89f063e012, type: 3}
   pickUp: {fileID: 8300000, guid: c8db38e653c7e33419668d187e4b00ed, type: 3}
   movementController: {fileID: 1426587091844254053}
+  settingsHolder: {fileID: 11400000, guid: 20e9d4a2b69bbaa44ad0558ed5d7e059, type: 2}
 --- !u!82 &5850242557881747204
 AudioSource:
   m_ObjectHideFlags: 0

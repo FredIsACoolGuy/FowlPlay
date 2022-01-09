@@ -16,7 +16,7 @@ public class SettingsMan : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(musicMan.gameObject);
-
+        this.gameObject.SetActive(false);
     }
 
     void Start()

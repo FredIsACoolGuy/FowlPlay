@@ -28,10 +28,10 @@ public class DisconnectFromGameButton : MonoBehaviour
     {
 
         //this check is here because the game can still be played locally which doesnt use Steamworks
-        if (networkManager.GetComponent<SteamLobby>() != null)
-        {
+        //if (networkManager.GetComponent<SteamLobby>() != null)
+        //{
             networkManager.GetComponent<SteamLobby>().ClientDisconnect();
-        }
+        //}
 
         //if the client is also the host this shuts down the server aswell
         if (isLeader)
@@ -39,6 +39,7 @@ public class DisconnectFromGameButton : MonoBehaviour
             //networkManager.GetComponent<NetworkManagerOverride>().StopClient();
             //networkManager.GetComponent<NetworkManagerOverride>().StopServer();
             
+
             NetworkClient.Shutdown();
             NetworkServer.Shutdown();
             NetworkManager.singleton.StopHost();
