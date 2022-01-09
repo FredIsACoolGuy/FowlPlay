@@ -16,6 +16,7 @@ public class TestScript : MonoBehaviour
         {
             _network.GamePlayers.Add(new NetworkGamePlayer());
             _network.GamePlayers[i].DisplayName = "test";
+            _network.GamePlayers[i].pickUpsCurrentlyHeld = 3;
         }
     }
     private void Update()

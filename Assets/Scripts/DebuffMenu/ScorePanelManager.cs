@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ScorePanelManager : Panel
 {
+    public float _speed;
+    public float _timer;
     private const float _offset = 55f;
 
     public override void InitializePanel()
     {
         InstantiatePlayerHolders();
-        ErrorHandling.CheckActive(gameObject);
     }
 
     public override void ExitPanel()
@@ -23,6 +24,7 @@ public class ScorePanelManager : Panel
         base.InstantiatePlayerHolders();
         LineUp(_offset);
         GrabLook();
+        DisplayScore();
     }
 
     //Lines up the players
@@ -56,9 +58,29 @@ public class ScorePanelManager : Panel
 
     private void DisplayScore()
     {
+        ErrorHandling.CheckActive(gameObject);
+
+        int currentMax = 0;
+
+        //find max num of debuffs first
         for (int i = 0; i < _playerHolders.Count; i++)
         {
-
+            var temp  = FindNumOfDebuffs(i);
+            if (temp > currentMax)
+            {
+                currentMax = temp;
+            }
         }
+
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+            _playerHolders[i].GetComponentInChildren<ScoreBar>().SetScore(FindNumOfDebuffs(i), currentMax, _speed);
+        }
+    }
+
+    //find number of debuffs player holds
+    private int FindNumOfDebuffs(int index)
+    {
+        return FindObjectOfType<NetworkManagerOverride>().GamePlayers[index].pickUpsCurrentlyHeld;
     }
 }

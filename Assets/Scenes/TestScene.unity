@@ -372,6 +372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterCircleHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 6217146435083823016, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
 --- !u!4 &303343486 stripped
@@ -1096,6 +1100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _holderPrefab: {fileID: 875605568779773433, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
+  _speed: 1
+  _timer: 0
 --- !u!4 &1793507129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 875605568779772953, guid: 55a3ccec8ea0fcd439dc043f3dd3cd85, type: 3}
@@ -1192,6 +1198,7 @@ MonoBehaviour:
   roomPlayerPrefab: {fileID: 6628949282100482053, guid: c0c29ef2b4f76424bb08f79601ce9e05, type: 3}
   gamePlayerPrefab: {fileID: 8015754391334550006, guid: 2a9976562f27d48478cc96fb52ed7311, type: 3}
   playerSpawnSystem: {fileID: 344826767306143028, guid: a36b2569c030a4e4da972fd1a374003c, type: 3}
+  ConnIDs: 
 --- !u!1001 &1880243965
 PrefabInstance:
   m_ObjectHideFlags: 0
