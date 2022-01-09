@@ -123,7 +123,7 @@
         
         Pass
         {
-            Tags { "LightMode" = "Always" }
+            Tags { "LightMode" = "Always" "RenderType" = "Transparent" "RenderQueue" = "Transparent"}
             Cull Front
             ZWrite Off
 
