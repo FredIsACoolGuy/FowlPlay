@@ -146,14 +146,14 @@ namespace Multiplayer.GameControls
                 {
                     knockDir = Vector3.Reflect(knockDir, hit.normal);
                     cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    soundMan.playHit();
+                    //soundMan.playHit();
                 }
                 else if (attacking)
                 {
                     attackDir = Vector3.Reflect(attackDir, hit.normal);
                     facingDir = attackDir.normalized;
                     cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    soundMan.playHit();
+                    //soundMan.playHit();
                 }
             }
 
