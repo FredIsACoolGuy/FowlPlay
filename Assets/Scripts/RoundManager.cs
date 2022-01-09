@@ -12,6 +12,8 @@ public class RoundManager : NetworkBehaviour
     int pickupSpawnInterval;
     int currentSeconds = 0;
     public TMP_Text timer;
+    private int totalPlayers;
+    public int playersInPit = 0;
 
     [ServerCallback]
     void Start()
@@ -20,6 +22,8 @@ public class RoundManager : NetworkBehaviour
         {
             pickupSpawnPoints.Add(child);
         }
+
+        totalPlayers = GameObject.Find("NetworkManager").GetComponent<NetworkManagerOverride>().GamePlayers.Count;
 
         currentSeconds = gameRules.timePerRound;
 
@@ -73,6 +77,16 @@ public class RoundManager : NetworkBehaviour
         }
 
         return output;
+    }
+
+
+    public void AnotherBirdPitted()
+    {
+        playersInPit++;
+        if (playersInPit >= totalPlayers)
+        {
+            GameObject.Find("NetworkManager").GetComponent<NetworkManagerOverride>().EndRound();
+        }
     }
 
     [Server]

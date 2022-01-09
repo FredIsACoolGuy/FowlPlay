@@ -183,6 +183,10 @@ public class NetworkManagerOverride : NetworkManager
         }
     }
 
+    public void EndRound()
+    {
+        ServerChangeScene("DebuffMenu");
+    }
 
 
 

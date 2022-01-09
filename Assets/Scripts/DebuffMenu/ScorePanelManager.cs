@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ScorePanelManager : Panel
 {
+    public float _speed;
+    public float _timer;
+    private const float _offset = 55f;
+
     public override void InitializePanel()
     {
         InstantiatePlayerHolders();
-        ErrorHandling.CheckActive(gameObject);
     }
 
     public override void ExitPanel()
@@ -19,26 +22,65 @@ public class ScorePanelManager : Panel
     protected override void InstantiatePlayerHolders()
     {
         base.InstantiatePlayerHolders();
-        LineUp();
+        LineUp(_offset);
+        GrabLook();
+        DisplayScore();
     }
 
     //Lines up the players
-    private void LineUp()
+    private void LineUp(float offset)
     {
-        var tempX = Screen.width / GetNumOfPlayers() + 1;
-        var tempY = Screen.height / 3;
+        var tempX = (Screen.width - (2 * offset)) / (GetNumOfPlayers());
+        var tempY = Screen.height / 5;
 
         for (int i = 1; i < GetNumOfPlayers() + 1; i++)
         {
-            _playerHolders[i-1].transform.position = new Vector2 (tempX * i - (tempX/2), tempY);
+            _playerHolders[i-1].transform.position = new Vector2 (tempX * i - (tempX/2) + offset, tempY);
         }
     }
 
+    //for any amount of players, grab their corresponding look
     private void GrabLook()
     {
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+            _playerHolders[i].GetComponent<CharacterLookScript>().changeType(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].typeNum);
+            _playerHolders[i].GetComponent<CharacterLookScript>().changeHat(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].hatNum);
+            _playerHolders[i].GetComponent<CharacterLookScript>().nameText.text = FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].DisplayName;    //bug? can't find
+            _playerHolders[i].GetComponent<CharacterLookScript>().setCircleColour(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].playerNum);
+        }
+
         /*_playerHolders[0].GetComponent<CharacterLookScript>().changeType(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].typeNum);
         _playerHolders[0].GetComponent<CharacterLookScript>().changeHat(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].hatNum);
         _playerHolders[0].GetComponent<CharacterLookScript>().nameText.text = FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].DisplayName;
         _playerHolders[0].GetComponent<CharacterLookScript>().setCircleColour(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].playerNum);*/
+    }
+
+    private void DisplayScore()
+    {
+        ErrorHandling.CheckActive(gameObject);
+
+        int currentMax = 0;
+
+        //find max num of debuffs first
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+            var temp  = FindNumOfDebuffs(i);
+            if (temp > currentMax)
+            {
+                currentMax = temp;
+            }
+        }
+
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+            _playerHolders[i].GetComponentInChildren<ScoreBar>().SetScore(FindNumOfDebuffs(i), currentMax, _speed);
+        }
+    }
+
+    //find number of debuffs player holds
+    private int FindNumOfDebuffs(int index)
+    {
+        return FindObjectOfType<NetworkManagerOverride>().GamePlayers[index].pickUpsCurrentlyHeld;
     }
 }

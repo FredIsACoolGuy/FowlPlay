@@ -88,9 +88,10 @@ namespace Multiplayer.GameControls
             }
             else if (knocked)
             {
-                knockedTime += Time.deltaTime;
-                float j =knockedTime/knockTimeMultiplier;
-                knockDir = new Vector3(knockDir.x, (knockedCurve.Evaluate(j)+startY)-transform.position.y,knockDir.z);
+              //  knockedTime += Time.deltaTime;
+               // float j =knockedTime/knockTimeMultiplier;
+                //knockDir = new Vector3(knockDir.x, (knockedCurve.Evaluate(j)+startY)-transform.position.y,knockDir.z);
+                
                 controller.Move(knockDir * knockPowerMultiplier * Time.deltaTime);
                 currentState = 2;
             }
@@ -132,6 +133,7 @@ namespace Multiplayer.GameControls
 
                 gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
 
+                NetworkServer.UnSpawn(other.gameObject);
                 Destroy(other.gameObject);
             }
         }
@@ -145,15 +147,15 @@ namespace Multiplayer.GameControls
                 if (knocked)
                 {
                     knockDir = Vector3.Reflect(knockDir, hit.normal);
-                    cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    soundMan.playHit();
+                    //cameraShakeScript.CameraShake(3f, 40, 1.6f);
+                    //soundMan.playHit();
                 }
                 else if (attacking)
                 {
                     attackDir = Vector3.Reflect(attackDir, hit.normal);
                     facingDir = attackDir.normalized;
                     cameraShakeScript.CameraShake(3f, 40, 1.6f);
-                    soundMan.playHit();
+                    //soundMan.playHit();
                 }
             }
 
@@ -257,6 +259,9 @@ namespace Multiplayer.GameControls
                 if (Vector3.Distance(transform.position, targetPitCentre.position) < 0.5f)
                 {
                     pauseMovement = true;
+                    controller.detectCollisions = false;
+                    GameObject.Find("RoundManager").GetComponent<RoundManager>().AnotherBirdPitted();
+                    this.gameObject.SetActive(false);
                 }
             }
         }
@@ -314,7 +319,7 @@ namespace Multiplayer.GameControls
             Debug.Log("KNOCKED");
             knockedTime =0f;
             //soundMan.playHit();
-            cameraShakeScript.CameraShake();
+            //cameraShakeScript.CameraShake();
             knockDir = transform.position - hitFrom;
             knockDir = new Vector3(knockDir.x, 0f, knockDir.z).normalized * power;
             
