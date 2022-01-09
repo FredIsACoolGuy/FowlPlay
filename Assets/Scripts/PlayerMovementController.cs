@@ -133,6 +133,7 @@ namespace Multiplayer.GameControls
 
                 gameObject.GetComponent<PlayerDebuffManager>().addDebuff(Random.Range(0,4), gamePlayer.playerNum);
 
+                NetworkServer.UnSpawn(other.gameObject);
                 Destroy(other.gameObject);
             }
         }
@@ -258,6 +259,9 @@ namespace Multiplayer.GameControls
                 if (Vector3.Distance(transform.position, targetPitCentre.position) < 0.5f)
                 {
                     pauseMovement = true;
+                    controller.detectCollisions = false;
+                    GameObject.Find("RoundManager").GetComponent<RoundManager>().AnotherBirdPitted();
+                    this.gameObject.SetActive(false);
                 }
             }
         }
