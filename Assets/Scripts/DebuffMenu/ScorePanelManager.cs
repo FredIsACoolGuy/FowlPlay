@@ -22,6 +22,7 @@ public class ScorePanelManager : Panel
     {
         base.InstantiatePlayerHolders();
         LineUp(_offset);
+        GrabLook();
     }
 
     //Lines up the players
@@ -36,11 +37,28 @@ public class ScorePanelManager : Panel
         }
     }
 
+    //for any amount of players, grab their corresponding look
     private void GrabLook()
     {
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+            _playerHolders[i].GetComponent<CharacterLookScript>().changeType(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].typeNum);
+            _playerHolders[i].GetComponent<CharacterLookScript>().changeHat(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].hatNum);
+            _playerHolders[i].GetComponent<CharacterLookScript>().nameText.text = FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].DisplayName;    //bug? can't find
+            _playerHolders[i].GetComponent<CharacterLookScript>().setCircleColour(FindObjectOfType<NetworkManagerOverride>().GamePlayers[i].playerNum);
+        }
+
         /*_playerHolders[0].GetComponent<CharacterLookScript>().changeType(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].typeNum);
         _playerHolders[0].GetComponent<CharacterLookScript>().changeHat(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].hatNum);
         _playerHolders[0].GetComponent<CharacterLookScript>().nameText.text = FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].DisplayName;
         _playerHolders[0].GetComponent<CharacterLookScript>().setCircleColour(FindObjectOfType<NetworkManagerOverride>().GamePlayers[0].playerNum);*/
+    }
+
+    private void DisplayScore()
+    {
+        for (int i = 0; i < _playerHolders.Count; i++)
+        {
+
+        }
     }
 }

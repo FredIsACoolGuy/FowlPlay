@@ -15,6 +15,7 @@ public class TestScript : MonoBehaviour
         for (int i = 0; i < _testNum; i++)
         {
             _network.GamePlayers.Add(new NetworkGamePlayer());
+            _network.GamePlayers[i].DisplayName = "test";
         }
     }
     private void Update()
