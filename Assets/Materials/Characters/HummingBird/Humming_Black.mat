@@ -59,6 +59,7 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DitherDebug: 0.5
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -79,4 +80,5 @@ Material:
     - _Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.19031681, g: 0.33962262, b: 0.2778409, a: 1}
+    - _PlayerCol: {r: 1, g: 0.7921569, b: 0.2901961, a: 1}
   m_BuildTextureStacks: []
