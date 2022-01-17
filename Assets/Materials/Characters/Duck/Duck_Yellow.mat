@@ -59,6 +59,8 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DitherDebug: 0.99
+    - _DitherScale: 170
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -69,7 +71,7 @@ Material:
     - _OutlineThickness: 0.057
     - _Parallax: 0.02
     - _ShadowFactor: 0.959
-    - _ShadowStrength: 0.086
+    - _ShadowStrength: 0.126
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -79,4 +81,5 @@ Material:
     - _Color: {r: 0.8962325, g: 0.9056604, b: 0.20847276, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.26415092, g: 0.17997466, b: 0.075756475, a: 1}
+    - _PlayerCol: {r: 0.77477944, g: 0.7924528, b: 0.10765392, a: 1}
   m_BuildTextureStacks: []

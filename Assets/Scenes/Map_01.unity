@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44703442, g: 0.49693048, b: 0.5750811, a: 1}
+  m_IndirectSpecularColor: {r: 0.44702196, g: 0.4969145, b: 0.5750708, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3130,6 +3130,7 @@ MonoBehaviour:
   gameRules: {fileID: 11400000, guid: 8e64c4b63d5b6d94b9f567b32d860db2, type: 2}
   pickup: {fileID: 4542325768344738100, guid: 74da90801fad1ff4392de761b9f0dbbc, type: 3}
   timer: {fileID: 1343732332}
+  playersInPit: 0
 --- !u!4 &288630664
 Transform:
   m_ObjectHideFlags: 0
@@ -13633,7 +13634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6091706004146786783, guid: a9d4cef279620794b91408100dec0166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 6091706004146786783, guid: a9d4cef279620794b91408100dec0166, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13670,7 +13671,7 @@ PrefabInstance:
     - target: {fileID: 7247470234221381100, guid: a9d4cef279620794b91408100dec0166, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 825d9177ba423f8478e872e7f629c635, type: 2}
+      objectReference: {fileID: 2100000, guid: 9881ac0947095ed40a0315f6187b4a64, type: 2}
     - target: {fileID: 8333356410992741646, guid: a9d4cef279620794b91408100dec0166, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.3262259
