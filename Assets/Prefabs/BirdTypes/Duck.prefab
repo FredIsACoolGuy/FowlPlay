@@ -605,7 +605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0, g: 0, b: 0, a: 0}
-  renderer: {fileID: 3467272065371833300}
+  renderers:
+  - {fileID: 3467272065371833300}
   isBird: 1
 --- !u!1 &4749488466904305614
 GameObject:

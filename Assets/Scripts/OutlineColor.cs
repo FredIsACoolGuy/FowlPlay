@@ -5,13 +5,13 @@ using UnityEngine;
 public class OutlineColor : MonoBehaviour
 {
     [HideInInspector] public Color outlineColor;
-    [SerializeField] Renderer renderer;
+    [SerializeField] Renderer[] renderers;
     [SerializeField] bool isBird = false;
     private float lineWeightMultiplier = 1;
 
     private void Awake() {
         if (isBird) {
-            outlineColor = renderer.material.GetColor("_OutlineColor");
+            outlineColor = renderers[0].material.GetColor("_OutlineColor");
         }
         else {
             StartCoroutine(SetColor());
@@ -21,7 +21,11 @@ public class OutlineColor : MonoBehaviour
     public void MultiplyLineWeight(float lineWeightMultiplier) {
         this.lineWeightMultiplier = lineWeightMultiplier;
 
-        Material[] mats = renderer.materials;
+        List<Material> mats = new List<Material>();
+        foreach(Renderer r in renderers) {
+            mats.AddRange(r.materials);
+        }
+
         float lineWeight = mats[0].GetFloat("_OutlineThickness");
 
         foreach (Material mat in mats) {
@@ -37,9 +41,13 @@ public class OutlineColor : MonoBehaviour
             Color col = parentScript.outlineColor;
             float parentMultiplier = parentScript.lineWeightMultiplier;
 
-            if (renderer == null)
-                renderer = GetComponent<Renderer>();
-            Material[] mats = renderer.materials;
+            if (renderers.Length == 0)
+                renderers = new Renderer[] { GetComponent<Renderer>() };
+
+            List<Material> mats = new List<Material>();
+            foreach (Renderer r in renderers) {
+                mats.AddRange(r.materials);
+            }
 
             float lineWeight = mats[0].GetFloat("_OutlineThickness");
             foreach (Material mat in mats)
@@ -58,9 +66,13 @@ public class OutlineColor : MonoBehaviour
             OutlineColor parentScript = transform.parent.GetComponent<OutlineColor>();
             Color col = parentScript.outlineColor;
 
-            if (renderer == null)
-                renderer = GetComponent<Renderer>();
-            Material[] mats = renderer.materials;
+            if (renderers.Length == 0)
+                renderers = new Renderer[] { GetComponent<Renderer>() };
+
+            List<Material> mats = new List<Material>();
+            foreach (Renderer r in renderers) {
+                mats.AddRange(r.materials);
+            }
 
             foreach (Material mat in mats)
             {
